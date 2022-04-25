@@ -9,7 +9,7 @@ case class PrefixProperty(prf: String) {
       function(prf)
     } match {
       case Success(value) => value
-      case Failure(exception) => throw new IllegalArgumentException("Unable to read property by prefix " + prf, exception)
+      case Failure(exception) => throw new IllegalArgumentException(s"Unable to read property by prefix '$prf', error: ${exception.getMessage}", exception)
     }
     triedT
   }

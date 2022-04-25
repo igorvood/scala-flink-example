@@ -8,6 +8,7 @@ import scala.collection.JavaConverters._
 import scala.collection.convert.ImplicitConversions.`map AsScala`
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
+import scala.language.implicitConversions
 
 object ConfigUtils {
   private val logger = LoggerFactory.getLogger(getClass)
@@ -36,14 +37,13 @@ object ConfigUtils {
     result
   }
 
-
   implicit def proppsFromOptionalFile(fileName: String): Map[String, String] =
     getPropsFromResourcesFile(fileName) match {
       case Success(value) => value
       case Failure(_) => Map()
     }
 
-  implicit def getAllProps(args: Array[String] = Array[String](), fileNames: List[String] = List()): Map[String, String] = {
+  implicit def getAllProps(args: Array[String] = Array[String](), fileNames: List[String] = List()): AllApplicationProperties = {
     val propsFile = fileNames
       .map {
         getPropsFromResourcesFile
@@ -53,8 +53,10 @@ object ConfigUtils {
         case Failure(exception) => throw exception
       }).toMap
 
+    AllApplicationProperties(
     propsFile ++
       getPropsFromArgs(args).get
+    )
   }
 }
 
