@@ -41,10 +41,12 @@ class SimpleFlinkKafkaTest extends org.scalatest.flatspec.AnyFlatSpec with shoul
 
   "runs with embedded kafka" should "work" in {
 
-    implicit val config = EmbeddedKafkaConfig(
+   /* implicit val config = EmbeddedKafkaConfig(
       kafkaPort = SimpleFlinkKafkaTest.kafkaPort,
       zooKeeperPort = SimpleFlinkKafkaTest.zooKeeperPort
-    )
+    )*/
+
+    val config1 = EmbeddedKafkaConfig.defaultConfig
 
     withRunningKafka {
 
@@ -75,7 +77,7 @@ class SimpleFlinkKafkaTest extends org.scalatest.flatspec.AnyFlatSpec with shoul
       env.execute()
       consumeFirstStringMessageFrom("output-topic") shouldEqual SimpleFlinkKafkaTest.expectedString
 
-    }
+    }(config1)
 
   }
 }
