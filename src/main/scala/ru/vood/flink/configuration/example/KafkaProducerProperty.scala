@@ -1,8 +1,9 @@
 package ru.vood.flink.configuration.example
 
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer.Semantic
+import ru.vood.flink.configuration.AllApplicationProperties
+import ru.vood.flink.configuration.PrefixProperty.PredefPrefix
 import ru.vood.flink.configuration.PropertyUtil.propertyVal
-import ru.vood.flink.configuration.{AllApplicationProperties, PrefixProperty}
 
 import java.util.Properties
 
@@ -28,12 +29,11 @@ object KafkaProducerProperty {
             kafkaProperty: KafkaProperty)(
              implicit appProps: AllApplicationProperties
            ): KafkaProducerProperty =
-    PrefixProperty(prefix)
-      .createPropertyData { prf =>
-        new KafkaProducerProperty(
-          producerSemantic = Semantic.valueOf(propertyVal(prf, "producerSemantic")),
-          topicName = propertyVal(prf, "topicName"),
-          propertiesProducers = kafkaProperty.property.clone.asInstanceOf[Properties]
-        )
-      }
+    prefix createProperty { prf =>
+      new KafkaProducerProperty(
+        producerSemantic = Semantic.valueOf(propertyVal(prf, "producerSemantic")),
+        topicName = propertyVal(prf, "topicName"),
+        propertiesProducers = kafkaProperty.property.clone.asInstanceOf[Properties]
+      )
+    }
 }

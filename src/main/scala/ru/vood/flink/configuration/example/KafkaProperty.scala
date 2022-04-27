@@ -1,7 +1,8 @@
 package ru.vood.flink.configuration.example
 
+import ru.vood.flink.configuration.AllApplicationProperties
+import ru.vood.flink.configuration.PrefixProperty.PredefPrefix
 import ru.vood.flink.configuration.PropertyUtil.{asProperty, fullPrefix}
-import ru.vood.flink.configuration.{AllApplicationProperties, PrefixProperty}
 
 import java.util.Properties
 
@@ -15,9 +16,8 @@ case class KafkaProperty(property: Properties) {
 
 object KafkaProperty {
   def apply(prefix: String)(implicit appProps: AllApplicationProperties): KafkaProperty =
-    PrefixProperty(prefix)
-      .createPropertyData { prf =>
-        new KafkaProperty(asProperty(fullPrefix(prf)))
-      }
+    prefix createProperty { prf =>
+      new KafkaProperty(asProperty(fullPrefix(prf)))
+    }
 
 }
