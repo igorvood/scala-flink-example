@@ -7,8 +7,8 @@ import java.util.Properties
 import scala.collection.JavaConverters._
 import scala.collection.convert.ImplicitConversions.`map AsScala`
 import scala.io.Source
-import scala.util.{Failure, Success, Try}
 import scala.language.implicitConversions
+import scala.util.{Failure, Success, Try}
 
 object ConfigUtils {
   private val logger = LoggerFactory.getLogger(getClass)
@@ -17,6 +17,13 @@ object ConfigUtils {
     val properites = new Properties()
     properites.putAll(props.asJava)
     properites
+  }
+
+  def getStringFromResourceFile(fileName: String): String = {
+    val bufferSource = Source.fromURL(getClass.getClassLoader.getResource(fileName))
+    val result = bufferSource.mkString
+    bufferSource.close()
+    result
   }
 
   def getPropsFromResourcesFile(fileName: String): Try[Map[String, String]] = Try {
@@ -30,12 +37,6 @@ object ConfigUtils {
     props.getProperties.toMap.asInstanceOf[Map[String, String]]
   }
 
-  def getStringFromResourceFile(fileName: String): String = {
-    val bufferSource = Source.fromURL(getClass.getClassLoader.getResource(fileName))
-    val result = bufferSource.mkString
-    bufferSource.close()
-    result
-  }
 
   implicit def proppsFromOptionalFile(fileName: String): Map[String, String] =
     getPropsFromResourcesFile(fileName) match {
@@ -54,8 +55,8 @@ object ConfigUtils {
       }).toMap
 
     AllApplicationProperties(
-    propsFile ++
-      getPropsFromArgs(args).get
+      propsFile ++
+        getPropsFromArgs(args).get
     )
   }
 }
