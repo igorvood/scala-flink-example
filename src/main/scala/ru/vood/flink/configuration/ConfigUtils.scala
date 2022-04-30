@@ -2,6 +2,7 @@ package ru.vood.flink.configuration
 
 import org.apache.flink.api.java.utils.ParameterTool
 import org.slf4j.LoggerFactory
+import org.yaml.snakeyaml.Yaml
 
 import java.util.Properties
 import scala.collection.JavaConverters._
@@ -27,8 +28,18 @@ object ConfigUtils {
   }
 
   def getPropsFromResourcesFile(fileName: String): Try[Map[String, String]] = Try {
-    val props = ParameterTool.fromPropertiesFile(Thread.currentThread.getContextClassLoader.getResourceAsStream(fileName))
-    props.getProperties.toMap.asInstanceOf[Map[String, String]]
+    if (fileName.endsWith(".properties")) {
+      val props = ParameterTool.fromPropertiesFile(Thread.currentThread.getContextClassLoader.getResourceAsStream(fileName))
+      props.getProperties.toMap.asInstanceOf[Map[String, String]]
+    } else if (fileName.endsWith(".yml")){
+/*
+      val yaml = new Yaml();
+      val data = yaml.load(inputStream)
+      System.out.println(data)
+*/
+      ???
+    } else throw new IllegalArgumentException(s"Unable to read file $fileName ")
+
   }
 
   private def getPropsFromArgs(args: Array[String] = Array[String]()): Try[Map[String, String]] = Try {

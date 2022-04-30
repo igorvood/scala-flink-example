@@ -6,7 +6,7 @@ class AllApplicationPropertiesTest extends org.scalatest.flatspec.AnyFlatSpec {
 
 
   private val producerPrefix = "kafka.producer.custom"
-  "read property" should " be success " in {
+  "read property from property file" should " be success " in {
 
     implicit val properties: AllApplicationProperties = ConfigUtils.getAllProps(fileNames = List("KafkaProducerPropertyMap.properties"))
 
@@ -18,7 +18,7 @@ class AllApplicationPropertiesTest extends org.scalatest.flatspec.AnyFlatSpec {
 
   }
 
-  "read property" should " be error " in {
+  "read property from property file" should " be error " in {
 
     val properties: AllApplicationProperties = ConfigUtils.getAllProps(fileNames = List("KafkaProducerPropertyMap.properties"))
 
@@ -27,7 +27,7 @@ class AllApplicationPropertiesTest extends org.scalatest.flatspec.AnyFlatSpec {
 
     val kafkaProperty = KafkaProperty("kafka.producer.common")
 
-    val assertion = assertThrows[IllegalArgumentException](KafkaProducerPropertyMap(producerPrefix, kafkaProperty))
+    assertThrows[IllegalArgumentException](KafkaProducerPropertyMap(producerPrefix, kafkaProperty))
 
   }
 

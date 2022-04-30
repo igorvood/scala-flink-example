@@ -19,6 +19,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.30</version>
+        </dependency>
+
+        <dependency>
             <groupId>net.mguenther.kafka</groupId>
             <artifactId>kafka-junit</artifactId>
             <version>2.4.0</version>
@@ -176,6 +182,12 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-scalatest_2.12</artifactId>
             <version>2.13.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-scalatest_2.12</artifactId>
+            <version>2.13.1</version>
         </dependency>
 
         <dependency>
@@ -357,7 +369,16 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <rules>
+                        <banDuplicatePomDependencyVersions/>
+                    </rules>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

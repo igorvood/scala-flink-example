@@ -1,0 +1,17 @@
+kafka:
+  producer:
+    custom:
+      producer1:
+        topicName: producer1_topicName
+        producerSemantic: EXACTLY_ONCE
+      producer2:
+        topicName: producer2_topicName
+        producerSemantic: EXACTLY_ONCE
+    common:
+      bootstrap: SomeBootstrap
+      otherProperty: otherPropertyValue
+things:
+  - colour: green
+    priority: 128
+  - colour: red
+    priority: 64
