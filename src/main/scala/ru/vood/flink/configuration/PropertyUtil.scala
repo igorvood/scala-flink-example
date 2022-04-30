@@ -1,8 +1,7 @@
 package ru.vood.flink.configuration
 
-import ru.vtb.uasp.common.utils.config.ConfigUtils.getPropsFromMap
-
 import java.util.Properties
+import scala.collection.JavaConverters._
 
 object PropertyUtil extends Serializable {
 
@@ -40,6 +39,12 @@ object PropertyUtil extends Serializable {
         (key, t)
       }
       )
+  }
+
+  def getPropsFromMap(props: Map[String, String]): Properties = {
+    val properites = new Properties()
+    properites.putAll(props.asJava)
+    properites
   }
 
 
