@@ -1,6 +1,6 @@
 package ru.vood.flink.configuration
 
-import ru.vood.flink.configuration.example.{KafkaProducerPropertyMap, KafkaProperty}
+import ru.vood.flink.configuration.example.{KafkaPrdProperty, KafkaProducerPropertyMap}
 
 class AllApplicationPropertiesTest extends org.scalatest.flatspec.AnyFlatSpec {
 
@@ -10,7 +10,7 @@ class AllApplicationPropertiesTest extends org.scalatest.flatspec.AnyFlatSpec {
 
     implicit val properties: AllApplicationProperties = ConfigUtils.getAllProps(fileNames = List("KafkaProducerPropertyMap.properties"))
 
-    val kafkaProperty = KafkaProperty("kafka.producer.common")
+    val kafkaProperty = KafkaPrdProperty("kafka.producer.common")
 
     val kafkaProducerPropertyMap = KafkaProducerPropertyMap(producerPrefix, kafkaProperty)
 
@@ -25,7 +25,7 @@ class AllApplicationPropertiesTest extends org.scalatest.flatspec.AnyFlatSpec {
     val bad = properties.prop.filter(prp => !prp._1.contains(producerPrefix))
     implicit val baseLocalApplicationProperties: AllApplicationProperties = AllApplicationProperties(bad)
 
-    val kafkaProperty = KafkaProperty("kafka.producer.common")
+    val kafkaProperty = KafkaPrdProperty("kafka.producer.common")
 
     assertThrows[IllegalArgumentException](KafkaProducerPropertyMap(producerPrefix, kafkaProperty))
 

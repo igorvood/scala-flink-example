@@ -12,7 +12,7 @@ case class KafkaProducerPropertyMap(producers: Map[String, KafkaProducerProperty
 object KafkaProducerPropertyMap {
 
   def apply(prefix: String,
-            kafkaProperty: KafkaProperty)(
+            kafkaProperty: KafkaPrdProperty)(
              implicit appProps: AllApplicationProperties
            ): KafkaProducerPropertyMap = {
     prefix createProperty { prf =>

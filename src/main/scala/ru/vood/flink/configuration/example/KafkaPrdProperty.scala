@@ -6,7 +6,7 @@ import ru.vood.flink.configuration.PropertyUtil.{asProperty, fullPrefix}
 
 import java.util.Properties
 
-case class KafkaProperty(property: Properties) {
+case class KafkaPrdProperty(property: Properties) {
   override def toString: String =
     s"""KafkaProperty{
        |  property: $property
@@ -14,10 +14,10 @@ case class KafkaProperty(property: Properties) {
 
 }
 
-object KafkaProperty {
-  def apply(prefix: String)(implicit appProps: AllApplicationProperties): KafkaProperty =
+object KafkaPrdProperty {
+  def apply(prefix: String)(implicit appProps: AllApplicationProperties): KafkaPrdProperty =
     prefix createProperty { prf =>
-      new KafkaProperty(asProperty(fullPrefix(prf)))
+      new KafkaPrdProperty(asProperty(fullPrefix(prf)))
     }
 
 }

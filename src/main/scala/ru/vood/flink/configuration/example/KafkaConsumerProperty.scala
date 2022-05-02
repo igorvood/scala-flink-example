@@ -22,7 +22,7 @@ case class KafkaConsumerProperty(topicName: String,
 object KafkaConsumerProperty {
 
   def apply(prefix: String,
-            kafkaProperty: KafkaProperty)(implicit appProps: AllApplicationProperties): KafkaConsumerProperty =
+            kafkaProperty: KafkaCnsProperty)(implicit appProps: AllApplicationProperties): KafkaConsumerProperty =
     prefix createProperty { prf =>
       KafkaConsumerProperty(topicName = propertyVal(prf, "topicName"),
         propertiesConsumer = kafkaProperty.property.clone.asInstanceOf[Properties]

@@ -26,7 +26,7 @@ case class KafkaProducerProperty(producerSemantic: Semantic,
 
 object KafkaProducerProperty {
   def apply(prefix: String,
-            kafkaProperty: KafkaProperty)(
+            kafkaProperty: KafkaPrdProperty)(
              implicit appProps: AllApplicationProperties
            ): KafkaProducerProperty =
     prefix createProperty { prf =>
