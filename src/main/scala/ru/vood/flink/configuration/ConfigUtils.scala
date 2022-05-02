@@ -31,18 +31,18 @@ object ConfigUtils {
     if (fileName.endsWith(".properties")) {
       val props = ParameterTool.fromPropertiesFile(Thread.currentThread.getContextClassLoader.getResourceAsStream(fileName))
       props.getProperties.toMap.asInstanceOf[Map[String, String]]
-    } else if (fileName.endsWith(".yml")){
+    } /*else if (fileName.endsWith(".yml")){
 /*
       val yaml = new Yaml();
       val data = yaml.load(inputStream)
       System.out.println(data)
 */
       ???
-    } else throw new IllegalArgumentException(s"Unable to read file $fileName ")
+    }*/ else throw new IllegalArgumentException(s"Unable to read file $fileName ")
 
   }
 
-  private def getPropsFromArgs(args: Array[String] = Array[String]()): Try[Map[String, String]] = Try {
+  def getPropsFromArgs(args: Array[String] = Array[String]()): Try[Map[String, String]] = Try {
     if (args == null || args.isEmpty) return Try(Map[String, String]())
     val props = ParameterTool.fromArgs(args)
     props.getProperties.toMap.asInstanceOf[Map[String, String]]
