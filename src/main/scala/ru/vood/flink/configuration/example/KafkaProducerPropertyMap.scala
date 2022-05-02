@@ -9,7 +9,6 @@ case class KafkaProducerPropertyMap(producers: Map[String, KafkaProducerProperty
   require(producers.nonEmpty, "producers must contains at last one producer")
 }
 
-
 object KafkaProducerPropertyMap {
 
   def apply(prefix: String,
