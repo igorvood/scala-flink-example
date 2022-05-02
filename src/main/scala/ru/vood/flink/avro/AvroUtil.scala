@@ -15,19 +15,6 @@ object AvroUtil {
 
   private val logger: Logger = LoggerFactory.getLogger(getClass.getName)
 
-  def decode[T](bytes: ByteBuffer, decoder: Decoder[T], reader: GenericDatumReader[GenericRecord]): T = {
-    var byteBuffer: ByteBufferInputStream = null
-    try {
-      byteBuffer = new ByteBufferInputStream(Collections.singletonList(bytes.duplicate))
-      val dec = DecoderFactory.get().binaryDecoder(byteBuffer, null)
-      val record = reader.read(null, dec)
-      decoder.decode(record)
-    }
-    finally {
-      if (byteBuffer != null) byteBuffer.close()
-    }
-  }
-
   def encode[T](value: T, encoder: Encoder[T], writer: GenericDatumWriter[GenericRecord]): Array[Byte] = {
     val outputStream: ByteArrayOutputStream = null
     try {
@@ -42,6 +29,21 @@ object AvroUtil {
       if (outputStream != null) outputStream.close()
     }
   }
+
+  def decode[T](bytes: ByteBuffer, decoder: Decoder[T], reader: GenericDatumReader[GenericRecord]): T = {
+    var byteBuffer: ByteBufferInputStream = null
+    try {
+      byteBuffer = new ByteBufferInputStream(Collections.singletonList(bytes.duplicate))
+      val dec = DecoderFactory.get().binaryDecoder(byteBuffer, null)
+      val record = reader.read(null, dec)
+      decoder.decode(record)
+    }
+    finally {
+      if (byteBuffer != null) byteBuffer.close()
+    }
+  }
+
+
 
   @inline implicit def bytesToUniversalDto: Array[Byte] => UniversalDto = { bytes =>
     try {

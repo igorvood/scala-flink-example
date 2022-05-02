@@ -10,7 +10,7 @@ import scala.util.{Failure, Success}
 trait JobInterface[T, CONFIGURATION] {
 
 
-  implicit def configApp(args: Array[String] )(implicit argsToProp: Array[String] => AllApplicationProperties): CONFIGURATION
+  implicit def configApp(args: Array[String])(implicit argsToProp: Array[String] => AllApplicationProperties): CONFIGURATION
 
   def init(env: StreamExecutionEnvironment)(implicit f: SourceFunction[T]): DataStream[T]
 

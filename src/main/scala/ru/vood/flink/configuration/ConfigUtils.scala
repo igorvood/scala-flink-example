@@ -2,7 +2,6 @@ package ru.vood.flink.configuration
 
 import org.apache.flink.api.java.utils.ParameterTool
 import org.slf4j.LoggerFactory
-import org.yaml.snakeyaml.Yaml
 
 import java.util.Properties
 import scala.collection.JavaConverters._
@@ -38,7 +37,8 @@ object ConfigUtils {
       System.out.println(data)
 */
       ???
-    }*/ else throw new IllegalArgumentException(s"Unable to read file $fileName ")
+    }*/
+    else throw new IllegalArgumentException(s"Unable to read file $fileName ")
 
   }
 

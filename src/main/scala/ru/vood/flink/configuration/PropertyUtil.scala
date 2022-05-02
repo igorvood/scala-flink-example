@@ -9,6 +9,11 @@ object PropertyUtil extends Serializable {
     filterAndMap(fullPrefix(prefix), appPropImplicit.prop)
       .getOrElse(propName, defaultVal)
 
+  def asProperty(propPrefix: String = "")(implicit appPropImplicit: AllApplicationProperties): Properties = {
+    val stringToString = filterAndMap(fullPrefix(propPrefix), appPropImplicit.prop)
+    getPropsFromMap(stringToString)
+  }
+
   def fullPrefix(prefix: String): String =
     if (prefix == null || prefix.endsWith("."))
       prefix
@@ -20,9 +25,10 @@ object PropertyUtil extends Serializable {
       .map(entry => (entry._1.replace(prf, ""), entry._2))
   }
 
-  def asProperty(propPrefix: String = "")(implicit appPropImplicit: AllApplicationProperties): Properties = {
-    val stringToString = filterAndMap(fullPrefix(propPrefix), appPropImplicit.prop)
-    getPropsFromMap(stringToString)
+  def getPropsFromMap(props: Map[String, String]): Properties = {
+    val properites = new Properties()
+    properites.putAll(props.asJava)
+    properites
   }
 
   def mapProperty[T](prefix: String = "",
@@ -39,12 +45,6 @@ object PropertyUtil extends Serializable {
         (key, t)
       }
       )
-  }
-
-  def getPropsFromMap(props: Map[String, String]): Properties = {
-    val properites = new Properties()
-    properites.putAll(props.asJava)
-    properites
   }
 
 
