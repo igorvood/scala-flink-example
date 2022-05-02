@@ -14,7 +14,7 @@ object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
   override def init(env: StreamExecutionEnvironment)(implicit f: SourceFunction[UniversalDto]): DataStream[UniversalDto] = env.addSource(f)
 
 
-  override implicit def configApp(args: Array[String])(implicit argsToProp: Array[String] => AllApplicationProperties): FlinkJobConfiguration = ???
+  override def defaultConfiguration(allProps: AllApplicationProperties): FlinkJobConfiguration = ???
 
   override def process(dataStream: DataStream[UniversalDto])(implicit filterConfiguration: FlinkJobConfiguration): DataStream[UniversalDto] = ???
 
