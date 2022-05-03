@@ -5,13 +5,13 @@ import ru.vood.flink.avro.AvroUtil._
 import ru.vood.flink.configuration.AllApplicationProperties
 import ru.vood.flink.configuration.example.{KafkaCnsProperty, KafkaConsumerProperty, KafkaPrdProperty, KafkaProducerPropertyMap}
 import ru.vood.flink.dto.UniversalDto
-import ru.vood.flink.kafka.consumer.ConsumerFactory.{des, getKafkaConsumer}
+import ru.vood.flink.kafka.consumer.KafkaFactory.{des, createKafkaConsumer}
 
 case class FlinkJobConfiguration(kafkaConsumerProperty: KafkaConsumerProperty,
                                  kafkaProducerPropertyMap: KafkaProducerPropertyMap
                                 ) {
 
-  lazy val kafkaConsumer: FlinkKafkaConsumer[UniversalDto] = getKafkaConsumer[UniversalDto](kafkaConsumerProperty)
+  lazy val kafkaConsumer: FlinkKafkaConsumer[UniversalDto] = createKafkaConsumer[UniversalDto](kafkaConsumerProperty)
 }
 
 

@@ -6,14 +6,14 @@ import ru.vood.flink.configuration.example.KafkaConsumerProperty
 
 import java.util.Properties
 
-object ConsumerFactory {
+object KafkaFactory {
 
   implicit def des[T](implicit convert: Array[Byte] => T): DeserializationSchema[T] =
     new AbstractDeserializationSchema[T]() {
       override def deserialize(message: Array[Byte]): T = convert.apply(message)
     }
 
-  def getKafkaConsumer[T](cp: KafkaConsumerProperty)(implicit des: DeserializationSchema[T]): FlinkKafkaConsumer[T] = {
+  def createKafkaConsumer[T](cp: KafkaConsumerProperty)(implicit des: DeserializationSchema[T]): FlinkKafkaConsumer[T] = {
     val consumer = new FlinkKafkaConsumer[T](cp.topicName, des, cp.propertiesConsumer.clone.asInstanceOf[Properties])
     consumer.setStartFromGroupOffsets()
     consumer
