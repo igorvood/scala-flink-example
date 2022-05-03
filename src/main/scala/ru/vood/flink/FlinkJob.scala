@@ -14,9 +14,11 @@ object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
   override def init(env: StreamExecutionEnvironment)(implicit f: SourceFunction[UniversalDto]): DataStream[UniversalDto] = env.addSource(f)
 
 
-  override def defaultConfiguration(allProps: AllApplicationProperties): FlinkJobConfiguration = ???
+  override def defaultConfiguration(implicit allProps: AllApplicationProperties): FlinkJobConfiguration = FlinkJobConfiguration(allProps)
 
-  override def process(dataStream: DataStream[UniversalDto])(implicit filterConfiguration: FlinkJobConfiguration): DataStream[UniversalDto] = ???
+  override def process(dataStream: DataStream[UniversalDto])(implicit filterConfiguration: FlinkJobConfiguration): DataStream[UniversalDto] = {
+    dataStream.map(q => q)
+  }
 
   override def setMainSink(mainDataStream: DataStream[UniversalDto])(implicit configuration: FlinkJobConfiguration): Unit = ???
 
@@ -28,7 +30,7 @@ object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
 
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     val value = env.fromCollection(List[UniversalDto]())
-    //    runFlow(env, configuration)()
+    runFlow(env, configuration)(configuration.kafkaConsumer)
   }
 
 

@@ -13,7 +13,7 @@ trait JobInterface[T, CONFIGURATION] {
   implicit def configApp(args: Array[String])(implicit argsToPropFun: Array[String] => AllApplicationProperties): CONFIGURATION =
     defaultConfiguration( argsToPropFun(args))
 
-   def defaultConfiguration(allProps: AllApplicationProperties)   :CONFIGURATION
+   def defaultConfiguration(implicit allProps: AllApplicationProperties)   :CONFIGURATION
 
   def init(env: StreamExecutionEnvironment)(implicit f: SourceFunction[T]): DataStream[T]
 
