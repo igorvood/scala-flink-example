@@ -262,6 +262,7 @@
                 <configuration>
                     <args>
                         <arg>-nobootcp</arg>
+                        <arg>-opt:l:inline</arg>
                     </args>
                 </configuration>
             </plugin>
