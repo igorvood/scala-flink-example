@@ -11,18 +11,18 @@ trait JobInterface[T, CONFIGURATION] {
 
 
   implicit def configApp(args: Array[String])(implicit argsToPropFun: Array[String] => AllApplicationProperties): CONFIGURATION =
-    defaultConfiguration( argsToPropFun(args))
+    defaultConfiguration(argsToPropFun(args))
 
-   def defaultConfiguration(implicit allProps: AllApplicationProperties)   :CONFIGURATION
+  def defaultConfiguration(implicit allProps: AllApplicationProperties): CONFIGURATION
 
-  def init(env: StreamExecutionEnvironment)(implicit f: SourceFunction[T]): DataStream[T]
+  implicit def init(env: StreamExecutionEnvironment)(implicit f: SourceFunction[T]): DataStream[T]
 
   def process(dataStream: DataStream[T])(implicit filterConfiguration: CONFIGURATION): DataStream[T]
 
   def setMainSink(mainDataStream: DataStream[T])(implicit configuration: CONFIGURATION): Unit
 
-  def runFlow(env: StreamExecutionEnvironment, cfg: CONFIGURATION)(implicit f: SourceFunction[T]): Unit = {
-    val dataStream = init(env)
+  def runFlow(env: StreamExecutionEnvironment, cfg: CONFIGURATION)(implicit f: StreamExecutionEnvironment => DataStream[T]): Unit = {
+    val dataStream = f(env)
     val processedDataStream = process(dataStream)(cfg)
     setMainSink(processedDataStream)(cfg)
   }
