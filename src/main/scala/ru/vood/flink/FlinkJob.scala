@@ -30,6 +30,7 @@ object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
 
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     val value = env.fromCollection(List[UniversalDto]())
+    refInputStream.setCommitOffsetsOnCheckpoints(true)
     runFlow(env, configuration)(configuration.kafkaConsumer)
   }
 

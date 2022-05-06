@@ -10,6 +10,8 @@ object KafkaFactory {
 
   type TopicName = String
 
+  val flinkKafkaConsumerCommitOffsetsOnCheckpoints = true
+
   implicit def des[T](implicit convert: Array[Byte] => T): DeserializationSchema[T] =
     new AbstractDeserializationSchema[T]() {
       override def deserialize(message: Array[Byte]): T = convert.apply(message)
@@ -18,6 +20,7 @@ object KafkaFactory {
   def createKafkaConsumer[T](cp: KafkaConsumerProperty)(implicit des: DeserializationSchema[T]): FlinkKafkaConsumer[T] = {
     val consumer = new FlinkKafkaConsumer[T](cp.topicName, des, cp.propertiesConsumer.clone.asInstanceOf[Properties])
     consumer.setStartFromGroupOffsets()
+    consumer.setCommitOffsetsOnCheckpoints(flinkKafkaConsumerCommitOffsetsOnCheckpoints)
     consumer
   }
 
