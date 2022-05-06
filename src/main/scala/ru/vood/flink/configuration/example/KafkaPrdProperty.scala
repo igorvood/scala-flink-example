@@ -6,7 +6,11 @@ import ru.vood.flink.configuration.PropertyUtil.{asProperty, fullPrefix}
 
 import java.util.Properties
 
-case class KafkaPrdProperty(property: Properties) {
+case class KafkaPrdProperty(property: Properties) extends KafkaProperties {
+
+  override val requiredProperty: Set[String] = Set("bootstrap.servers", "transaction.timeout.ms")
+  require(badProperties(property) == "", s"Properties ${badProperties(property)} must be not null")
+
   override def toString: String =
     s"""KafkaProperty{
        |  property: $property

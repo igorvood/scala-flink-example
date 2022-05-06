@@ -1,5 +1,6 @@
 package ru.vood.flink
 
+import org.apache.flink.api.common.serialization.{AbstractDeserializationSchema, DeserializationSchema}
 import org.apache.flink.api.scala.createTypeInformation
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
@@ -20,7 +21,7 @@ object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
     dataStream.map(q => q)
   }
 
-  override def setMainSink(mainDataStream: DataStream[UniversalDto])(implicit configuration: FlinkJobConfiguration): Unit = mainDataStream.addSink(configuration.kafkaProducerMap("asdf"))
+  override def setMainSink(mainDataStream: DataStream[UniversalDto])(implicit configuration: FlinkJobConfiguration): Unit = mainDataStream.addSink(configuration.kafkaProducerMap("producer-success"))
 
   def main(args: Array[String]): Unit = {
 
@@ -30,7 +31,8 @@ object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
 
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     runFlow(env, configuration) { env => init(env)(configuration.kafkaConsumer) }
-  }
 
+    env.execute(s"Run job ${getClass.getName}")
+  }
 
 }
