@@ -204,18 +204,19 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <artifactSet>
+                           <!-- <artifactSet>
                                 <excludes>
                                     <exclude>org.apache.flink:force-shading</exclude>
                                     <exclude>com.google.code.findbugs:jsr305</exclude>
                                 </excludes>
-                            </artifactSet>
+                            </artifactSet>-->
                             <filters>
                                 <filter>
                                     <!-- Do not copy the signatures in the META-INF folder.
                                     Otherwise, this might cause SecurityExceptions when using the JAR. -->
                                     <artifact>*:*</artifact>
                                     <excludes>
+                                        <exclude>module-info.class</exclude>
                                         <exclude>META-INF/*.SF</exclude>
                                         <exclude>META-INF/*.DSA</exclude>
                                         <exclude>META-INF/*.RSA</exclude>

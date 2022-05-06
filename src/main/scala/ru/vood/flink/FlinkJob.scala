@@ -20,7 +20,7 @@ object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
     dataStream.map(q => q)
   }
 
-  override def setMainSink(mainDataStream: DataStream[UniversalDto])(implicit configuration: FlinkJobConfiguration): Unit = ???
+  override def setMainSink(mainDataStream: DataStream[UniversalDto])(implicit configuration: FlinkJobConfiguration): Unit = mainDataStream.addSink(configuration.kafkaProducerMap("asdf"))
 
   def main(args: Array[String]): Unit = {
 
