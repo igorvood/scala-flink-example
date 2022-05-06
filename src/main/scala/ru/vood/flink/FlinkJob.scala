@@ -28,10 +28,10 @@ object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
 
     logger.info("Start app: " + this.getClass.getName)
 
-    val env = StreamExecutionEnvironment.getExecutionEnvironment
-    runFlow(env, configuration) { env => init(env)(configuration.kafkaConsumer) }
+    val environment = configFlink(configuration.flinkConfiguration)
+    runFlow(environment, configuration) { env => init(env)(configuration.kafkaConsumer) }
 
-    env.execute(s"Run job ${getClass.getName}")
+    environment.execute(s"Run job ${getClass.getName}")
   }
 
 }

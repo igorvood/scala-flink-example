@@ -8,7 +8,11 @@ import java.util.Properties
 
 case class KafkaCnsProperty(property: Properties) extends KafkaProperties {
 
-  override val requiredProperty: Set[String] = Set("bootstrap.servers")
+  override val requiredProperty: Set[String] =
+    Set(
+      "bootstrap.servers",
+      "group.id"
+    )
   require(badProperties(property) == "", s"Properties ${badProperties(property)} must be not null")
 
   override def toString: String =

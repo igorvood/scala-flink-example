@@ -1,6 +1,6 @@
 package ru.vood.flink.job
 
-import org.apache.flink.api.common.serialization.DeserializationSchema
+import org.apache.flink.streaming.api.CheckpointingMode
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
 import ru.vood.flink.configuration.AllApplicationProperties
@@ -10,7 +10,11 @@ import scala.util.{Failure, Success}
 
 trait JobInterface[T, CONFIGURATION] {
 
-
+  def configFlink(flinkConfiguration: FlinkConfiguration): StreamExecutionEnvironment = {
+    val environment = StreamExecutionEnvironment.getExecutionEnvironment
+    environment.enableCheckpointing(flinkConfiguration.appStreamCheckpointTimeMilliseconds, CheckpointingMode.EXACTLY_ONCE)
+    environment
+  }
 
   implicit def configApp(args: Array[String])(implicit argsToPropFun: Array[String] => AllApplicationProperties): CONFIGURATION =
     defaultConfiguration(argsToPropFun(args))
