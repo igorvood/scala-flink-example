@@ -1,6 +1,7 @@
 #Custom
 tmp/
 target/
+allure-results/
 
 # Created by https://www.toptal.com/developers/gitignore/api/intellij+all,scala
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all,scala

@@ -24,12 +24,14 @@
             <version>1.30</version>
         </dependency>
 
+<!-- дает варнинги при сборке
         <dependency>
             <groupId>net.mguenther.kafka</groupId>
             <artifactId>kafka-junit</artifactId>
             <version>2.4.0</version>
             <scope>test</scope>
         </dependency>
+-->
 
         <dependency>
             <groupId>org.drools</groupId>
@@ -179,12 +181,14 @@
             <version>2.13.2</version>
         </dependency>
 
+<!--дает варнинги при сборке
         <dependency>
             <groupId>io.github.embeddedkafka</groupId>
             <artifactId>embedded-kafka_2.12</artifactId>
             <version>2.8.1</version>
             <scope>test</scope>
         </dependency>
+-->
 
     </dependencies>
 

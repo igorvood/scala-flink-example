@@ -1,6 +1,5 @@
 package ru.vood.flink
 
-import org.apache.flink.api.common.serialization.{AbstractDeserializationSchema, DeserializationSchema}
 import org.apache.flink.api.scala.createTypeInformation
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
@@ -10,10 +9,10 @@ import ru.vood.flink.dto.UniversalDto
 import ru.vood.flink.job.{FlinkJobConfiguration, JobInterface}
 
 object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
+
   private val logger = LoggerFactory.getLogger(getClass)
 
   override def init(env: StreamExecutionEnvironment)(implicit f: SourceFunction[UniversalDto]): DataStream[UniversalDto] = env.addSource(f)
-
 
   override def defaultConfiguration(implicit allProps: AllApplicationProperties): FlinkJobConfiguration = FlinkJobConfiguration(allProps)
 
