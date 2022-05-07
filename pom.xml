@@ -21,8 +21,12 @@
         <avro4s.version>4.0.12</avro4s.version>
         <kafka.version>2.4.1</kafka.version>
         <drools.version>7.1.0.Final</drools.version>
-        <gatling.version>3.7.5</gatling.version>
+
+        <gatling.version>3.4.2</gatling.version>
         <gatling-maven-plugin.version>3.1.2</gatling-maven-plugin.version>
+
+<!--        <gatling.version>3.7.5</gatling.version>-->
+<!--        <gatling-maven-plugin.version>3.1.2</gatling-maven-plugin.version>-->
 
     </properties>
 
