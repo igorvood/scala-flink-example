@@ -21,7 +21,10 @@ object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
     dataStream.map(q => q)
   }
 
-  override def setMainSink(mainDataStream: DataStream[UniversalDto])(implicit configuration: FlinkJobConfiguration): Unit = mainDataStream.addSink(configuration.kafkaProducerMap("producer-success"))
+  override def setMainSink(mainDataStream: DataStream[UniversalDto])(implicit configuration: FlinkJobConfiguration): Unit = {
+    mainDataStream.print()
+    mainDataStream.addSink(configuration.kafkaProducerMap("producer-success"))
+  }
 
   def main(args: Array[String]): Unit = {
     logger.info("Start app: " + this.getClass.getName)
