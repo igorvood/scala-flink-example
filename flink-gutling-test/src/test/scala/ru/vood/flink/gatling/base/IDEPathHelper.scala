@@ -11,6 +11,6 @@ object IDEPathHelper {
   val mavenSourcesDirectory: Path = mavenSrcTestDirectory.resolve("scala")
   val mavenResourcesDirectory: Path = mavenSrcTestDirectory.resolve("resources")
   val mavenBinariesDirectory: Path = mavenTargetDirectory.resolve("test-classes")
-  val resultsDirectory: Path = mavenTargetDirectory.resolve("gatling")
+  val resultsDirectory: Path = mavenTargetDirectory.resolve("gatlingReport")
   val recorderConfigFile: Path = mavenResourcesDirectory.resolve("recorder.conf")
 }

@@ -10,7 +10,7 @@ object Engine extends App {
     .resourcesDirectory(IDEPathHelper.mavenResourcesDirectory.toString)
     .resultsDirectory(IDEPathHelper.resultsDirectory.toString)
     .binariesDirectory(IDEPathHelper.mavenBinariesDirectory.toString)
-    .simulationClass("ru.vtb.ie.test.UaspStreamingBussinesRulesIntegrationTestScript")
+    .simulationClass("ru.vood.flink.gatling.FlinkGatlingTestScript")
 
   Gatling.fromMap(props.build)
 }
