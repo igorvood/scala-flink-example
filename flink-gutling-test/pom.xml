@@ -159,6 +159,29 @@
                 <version>${gatling-maven-plugin.version}</version>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <failOnWarning>true</failOnWarning>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>unpack-sigar</id>
+                        <phase>test-compile<!-- or any other valid maven phase --></phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeGroupIds>ru.vood.flink</includeGroupIds>
+                            <includeArtifactIds>scala-flink-example-service</includeArtifactIds>
+                            <includes>application.properties,application-local.properties</includes>
+                            <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
