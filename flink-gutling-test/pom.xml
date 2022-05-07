@@ -12,6 +12,23 @@
     <artifactId>flink-gutling-test</artifactId>
 
     <dependencies>
+      <!--  <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-actor_${scala.binary.version}</artifactId>
+            <version>${akka.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-protobuf_${scala.binary.version}</artifactId>
+            <version>${akka.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-stream_${scala.binary.version}</artifactId>
+            <version>${akka.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>ru.vood.flink</groupId>
             <artifactId>scala-flink-example-service</artifactId>
@@ -48,9 +65,8 @@
             <version>0.6.1</version>
         </dependency>
         <dependency>
-            <groupId>com.github.mnogu</groupId>
-            <artifactId>gatling-kafka_2.12</artifactId>
-            <version>0.3.1</version>
+            <groupId>ru.vood.flink</groupId>
+            <artifactId>gatling-kafka-fork</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

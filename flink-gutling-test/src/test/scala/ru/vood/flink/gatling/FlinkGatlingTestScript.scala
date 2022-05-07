@@ -79,26 +79,28 @@ class FlinkGatlingTestScript extends Simulation {
     .topic(kafkaConsumerPropertyFromService.topicName)
     .properties(kafkaConsumerPropertyFromService.propertiesConsumer)
 
-  private val builder: ScenarioBuilder = scenario(" BusinessRulesTest")
+  private val customerIdSessionName = "customer_id"
+  private val bytesInputDtoSessionName = "bytes_uaspDto"
   val scenarioBusinessRules = scenario(" BusinessRulesTest")
     .exec(session => {
       val customer_id = prefix + fooCounter.inc()
       val updateSession: Session = session
-        .set("customer_id", customer_id)
+        .set(customerIdSessionName, customer_id)
         .set("countMessages", 0L)
       updateSession
     })
     .repeat(generationParam.countTransaction)({
+
       feed(feeder)
         .exec(session => {
-          val customer_id = session("customer_id").as[String]
+          val customer_id = session(customerIdSessionName).as[String]
           val uaspDto = UniversalDto(Map(), Map(), Map(), "sad")
 
           val bytes_uaspDto = AvroUtil.encode[UniversalDto](uaspDto, encoder, writer)
           session
-            .set("bytes_uaspDto", bytes_uaspDto)
+            .set(bytesInputDtoSessionName, bytes_uaspDto)
         })
-        .exec(kafka("Request for classification").send[String, Array[Byte]]("${customer_id}", "${bytes_uaspDto}")
+        .exec(kafka("Request for classification").send[String, Array[Byte]]("${" + customerIdSessionName + "}", "${" + bytesInputDtoSessionName + "}")
         )
     })
 

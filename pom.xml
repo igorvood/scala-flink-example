@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.vood.flink</groupId>
     <artifactId>scala-flink-example</artifactId>
@@ -9,12 +10,14 @@
     <modules>
         <module>flink-gutling-test</module>
         <module>scala-flink-example-service</module>
+        <module>gatling-kafka-fork</module>
     </modules>
 
     <properties>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <flink.version>1.12.1</flink.version>
-<!--        <flink.version>1.14.3</flink.version>-->
+        <!--        <flink.version>1.14.3</flink.version>-->
         <scala.binary.version>2.12</scala.binary.version>
         <scala.version>2.12.10</scala.version>
         <log4j.version>2.12.1</log4j.version>
@@ -25,8 +28,9 @@
         <gatling.version>3.4.2</gatling.version>
         <gatling-maven-plugin.version>3.1.2</gatling-maven-plugin.version>
 
-<!--        <gatling.version>3.7.5</gatling.version>-->
-<!--        <gatling-maven-plugin.version>3.1.2</gatling-maven-plugin.version>-->
+        <akka.version>2.6.8</akka.version>
+        <!--        <gatling.version>3.7.5</gatling.version>-->
+        <!--        <gatling-maven-plugin.version>3.1.2</gatling-maven-plugin.version>-->
 
     </properties>
 
@@ -40,6 +44,11 @@
             <dependency>
                 <groupId>ru.vood.flink</groupId>
                 <artifactId>scala-flink-example-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.vood.flink</groupId>
+                <artifactId>gatling-kafka-fork</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
