@@ -98,6 +98,7 @@ class FlinkGatlingTestScript extends Simulation {
 
           val bytes_uaspDto = AvroUtil.encode[UniversalDto](uaspDto, encoder, writer)
           session
+
             .set(bytesInputDtoSessionName, bytes_uaspDto)
         })
         .exec(kafka("Request for classification").send[String, Array[Byte]]("${" + customerIdSessionName + "}", "${" + bytesInputDtoSessionName + "}")
