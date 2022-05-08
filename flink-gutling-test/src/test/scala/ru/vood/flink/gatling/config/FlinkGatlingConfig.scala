@@ -7,11 +7,7 @@ import ru.vood.flink.job.FlinkJobConfiguration
 case class FlinkGatlingConfig(flinkJobServiceConfiguration: FlinkJobConfiguration,
                               generationParam: GenerationParameters,
                               additionalProducerGatlingProp: AdditionalProducerGatlingProp,
-                             ) {
-
-
-}
-
+                             )
 
 object FlinkGatlingConfig extends GatlingConfig {
 
