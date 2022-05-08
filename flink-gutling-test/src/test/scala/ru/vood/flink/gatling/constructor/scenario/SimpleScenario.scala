@@ -14,7 +14,7 @@ case class SimpleScenario(implicit config: FlinkGatlingConfig) extends GatlingKa
 
   override val gatlingOpenInjectionStep: GatlingOpenInjectionStep = UserByTransactionStep(config.generationParam)
 
-  override val gatlingScenarioBuilder: GatlingScenarioBuilder = OnlySendKafkaScenario()
+  override val gatlingScenarioBuilder: GatlingScenarioBuilder = OnlySendKafkaScenario("DATA1")
 
 
 }

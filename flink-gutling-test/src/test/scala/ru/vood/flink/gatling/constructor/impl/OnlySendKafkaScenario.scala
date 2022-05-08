@@ -2,9 +2,9 @@ package ru.vood.flink.gatling.constructor.impl
 
 import com.github.mnogu.gatling.kafka.Predef.kafka
 import com.sksamuel.avro4s.{AvroSchema, Encoder}
-import io.gatling.core.Predef._
+import io.gatling.core.Predef.{Session, _}
 import io.gatling.core.action.builder.ActionBuilder
-import io.gatling.core.session.Session
+import io.gatling.core.session.{Expression, Session}
 import io.gatling.core.structure.ScenarioBuilder
 import org.apache.avro.Schema
 import org.apache.avro.generic.{GenericDatumWriter, GenericRecord}
@@ -18,22 +18,31 @@ import java.util.Calendar
 import scala.collection.mutable
 import scala.util.Random
 
-case class OnlySendKafkaScenario() extends GatlingScenarioBuilder {
+case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBuilder {
 
-  override implicit val sendToActionBuilder: ActionBuilder = kafka("Request for classification").send[String, Array[Byte]]("${" + customerIdSessionName + "}", "${" + bytesInputDtoSessionName + "}")
+  override implicit val sendToActionBuilder: ActionBuilder = kafka(scenarioName+" kafka request").send[String, Array[Byte]]("${" + customerIdSessionName + "}", "${" + bytesInputDtoSessionName + "}")
 
-  val config: FlinkGatlingConfig = FlinkGatlingConfig.apply()
+  override def START_USERS: Long = startUserNumberFrom()
+
+  def idGenerateActionBuilder(session: Session): Session = {
+    val customer_id = prefix + fooCounter.inc()
+    val updateSession: Session = session
+      .set(customerIdSessionName, customer_id)
+      .set("countMessages", 0L)
+    updateSession
+  }
+
+
+  lazy val config: FlinkGatlingConfig = FlinkGatlingConfig.apply()
 
   def startUserNumberFrom(): Long = Random.nextInt(100) * Random.nextInt(100) * 10000
 
-  val START_USERS: Long = startUserNumberFrom()
-  private val generationParam: GenerationParameters = config.generationParam
-  val prefix: String = generationParam.prefixIdentity.getOrElse("")
-  val fooCounter = new FooCounter(START_USERS)
-  val feeder: Iterator[Map[String, Any]] = Iterator.continually(generateMsgFields)
+
+  private lazy val generationParam: GenerationParameters = config.generationParam
+  lazy val prefix: String = generationParam.prefixIdentity.getOrElse("")
+
+  lazy val feeder: Iterator[Map[String, Any]] = Iterator.continually(generateMsgFields)
   var expectedResultsMap = mutable.Map[String, UniversalDto]();
-  private lazy val customerIdSessionName = "customer_id"
-  private lazy val bytesInputDtoSessionName = "bytes_uaspDto"
 
   def generateMsgFields(): Map[String, Any] = {
     val time = Calendar.getInstance().getTime.getTime
