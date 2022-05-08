@@ -6,14 +6,13 @@ import com.sksamuel.avro4s.{AvroSchema, Encoder}
 import io.gatling.core.Predef._
 import io.gatling.core.scenario.Simulation
 import io.gatling.core.session.Session
-import io.gatling.core.structure.ScenarioBuilder
 import org.apache.avro.Schema
 import org.apache.avro.generic.{GenericDatumWriter, GenericRecord}
 import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.dto.UniversalDto
 import ru.vood.flink.gatling.common.FooCounter
 import ru.vood.flink.gatling.config.{FlinkGatlingConfig, GenerationParameters}
-import ru.vood.flink.gatling.extension.GatlingExtension._
+import ru.vood.flink.gatling.constructor.impl.KafkaProtocolCreator.GatlingKafkaProtocolPreDef
 
 import java.util.Calendar
 import scala.collection.mutable
@@ -77,7 +76,7 @@ class FlinkGatlingTestScript extends Simulation {
 
   val kafkaConf: KafkaProtocol = kafka
     .topic(kafkaConsumerPropertyFromService.topicName)
-    .properties(kafkaConsumerPropertyFromService.propertiesConsumer)
+    .propertiesFromProp(kafkaConsumerPropertyFromService.propertiesConsumer)
 
   private val customerIdSessionName = "customer_id"
   private val bytesInputDtoSessionName = "bytes_uaspDto"

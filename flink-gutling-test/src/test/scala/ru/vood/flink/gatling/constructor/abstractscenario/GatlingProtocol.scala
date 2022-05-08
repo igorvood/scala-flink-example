@@ -1,4 +1,4 @@
-package ru.vood.flink.gatling.abstractscenario
+package ru.vood.flink.gatling.constructor.abstractscenario
 
 import io.gatling.core.protocol.Protocol
 
