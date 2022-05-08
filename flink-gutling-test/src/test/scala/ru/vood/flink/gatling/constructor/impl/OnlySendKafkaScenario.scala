@@ -6,19 +6,19 @@ import io.gatling.core.Predef._
 import io.gatling.core.action.builder.ActionBuilder
 import io.gatling.core.structure.ScenarioBuilder
 import org.apache.avro.Schema
-import org.apache.avro.generic.{GenericDatumWriter, GenericRecord}
-import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.dto.UniversalDto
 import ru.vood.flink.gatling.config.{FlinkGatlingConfig, GenerationParameters}
 import ru.vood.flink.gatling.constructor.abstractscenario.GatlingScenarioBuilder
-import ru.vood.flink.gatling.constructor.impl._
+
 import scala.util.Random
 
 case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBuilder[UniversalDto] {
 
 
   override def schema: Schema = AvroSchema[UniversalDto]
+
   override def encoder: Encoder[UniversalDto] = Encoder[UniversalDto]
+
   lazy val config: FlinkGatlingConfig = FlinkGatlingConfig.apply()
 
   implicit lazy val generationParam: GenerationParameters = config.generationParam
@@ -27,9 +27,9 @@ case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBu
 
   override def START_USERS: Long = Random.nextInt(100) * Random.nextInt(100) * 10000
 
-//  val schema: Schema = AvroSchema[UniversalDto]
-//  val encoder: Encoder[UniversalDto] = com.sksamuel.avro4s.Encoder[UniversalDto]
-//  val writer = new GenericDatumWriter[GenericRecord](schema)
+  //  val schema: Schema = AvroSchema[UniversalDto]
+  //  val encoder: Encoder[UniversalDto] = com.sksamuel.avro4s.Encoder[UniversalDto]
+  //  val writer = new GenericDatumWriter[GenericRecord](schema)
 
   /*def dtoGenerate[T](session: Session)(implicit genFunction: String =>T): Session = {
     val customer_id = session(customerIdSessionName).as[String]
@@ -44,18 +44,13 @@ case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBu
   }*/
 
 
+  override implicit val genFunction: String => UniversalDto = s => UniversalDto(s, Map(), Map(), Map())
+
   override def createScenarioBuilder: ScenarioBuilder = {
     scenario(s"$scenarioName scenario test")
       .exec(idGenerateActionBuilder(_))
       .repeat(generationParam.countTransaction)({
-        exec(session => {
-          val customer_id = session(customerIdSessionName).as[String]
-          val universalDto = UniversalDto(customer_id, Map(), Map(), Map())
-
-          val bytesUniversalDto = AvroUtil.encode[UniversalDto](universalDto, encoder, writer)
-          session
-            .set(bytesInputDtoSessionName, bytesUniversalDto)
-        })
+        exec(dtoGenerate(_))
           .exec(sendToActionBuilder)
       })
   }

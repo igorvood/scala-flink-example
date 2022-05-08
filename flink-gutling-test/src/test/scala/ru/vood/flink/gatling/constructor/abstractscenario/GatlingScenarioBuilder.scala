@@ -7,7 +7,7 @@ import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.gatling.common.FooCounter
 import ru.vood.flink.gatling.config.GenerationParameters
 
-trait GatlingScenarioBuilder[DTO] extends SessionParamNames with DtoGenerate[DTO]{
+trait GatlingScenarioBuilder[DTO] extends SessionParamNames with DtoGenerate[DTO] {
 
   val scenarioName: String
 
@@ -28,7 +28,9 @@ trait GatlingScenarioBuilder[DTO] extends SessionParamNames with DtoGenerate[DTO
     updateSession
   }
 
-  def dtoGenerate(session: Session)(implicit genFunction: String =>DTO): Session = {
+  implicit val genFunction: String => DTO
+
+  def dtoGenerate(session: Session)(implicit genFunction: String => DTO): Session = {
     val customer_id = session(customerIdSessionName).as[String]
     val t = genFunction(customer_id)
     //    val universalDto = UniversalDto(customer_id, Map(), Map(), Map())
