@@ -1,21 +1,18 @@
 package ru.vood.flink.gatling.constructor.abstractscenario
 
 import io.gatling.core.Predef.Session
-import io.gatling.core.action.builder.ActionBuilder
 import io.gatling.core.structure.ScenarioBuilder
 import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.gatling.common.FooCounter
 import ru.vood.flink.gatling.config.GenerationParameters
 
-trait GatlingScenarioBuilder[DTO] extends SessionParamNames with DtoGenerate[DTO] {
+trait GatlingScenarioBuilder[DTO] extends SessionParamNames with DtoGenerate[DTO] with GatlingScenarioSender {
 
   val scenarioName: String
 
   def START_USERS: Long
 
   protected lazy val fooCounter = new FooCounter(START_USERS)
-
-  implicit val sendToActionBuilder: ActionBuilder
 
   def createScenarioBuilder: ScenarioBuilder
 
