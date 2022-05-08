@@ -3,10 +3,11 @@ package ru.vood.flink.gatling.constructor.abstractscenario
 import io.gatling.core.Predef.Session
 import io.gatling.core.action.builder.ActionBuilder
 import io.gatling.core.structure.ScenarioBuilder
+import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.gatling.common.FooCounter
 import ru.vood.flink.gatling.config.GenerationParameters
 
-trait GatlingScenarioBuilder extends SessionParamNames {
+trait GatlingScenarioBuilder[DTO] extends SessionParamNames with DtoGenerate[DTO]{
 
   val scenarioName: String
 
@@ -25,6 +26,18 @@ trait GatlingScenarioBuilder extends SessionParamNames {
       .set(customerIdSessionName, customer_id)
       .set(countMessages, 0L)
     updateSession
+  }
+
+  def dtoGenerate(session: Session)(implicit genFunction: String =>DTO): Session = {
+    val customer_id = session(customerIdSessionName).as[String]
+    val t = genFunction(customer_id)
+    //    val universalDto = UniversalDto(customer_id, Map(), Map(), Map())
+
+    val bytesUniversalDto = AvroUtil.encode[DTO](t, encoder, writer)
+    session
+      .set(bytesInputDtoSessionName, bytesUniversalDto)
+
+
   }
 
 }

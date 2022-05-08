@@ -11,13 +11,14 @@ import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.dto.UniversalDto
 import ru.vood.flink.gatling.config.{FlinkGatlingConfig, GenerationParameters}
 import ru.vood.flink.gatling.constructor.abstractscenario.GatlingScenarioBuilder
-
-import java.util.Calendar
-import scala.collection.mutable
+import ru.vood.flink.gatling.constructor.impl._
 import scala.util.Random
 
-case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBuilder {
+case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBuilder[UniversalDto] {
 
+
+  override def schema: Schema = AvroSchema[UniversalDto]
+  override def encoder: Encoder[UniversalDto] = Encoder[UniversalDto]
   lazy val config: FlinkGatlingConfig = FlinkGatlingConfig.apply()
 
   implicit lazy val generationParam: GenerationParameters = config.generationParam
@@ -26,35 +27,33 @@ case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBu
 
   override def START_USERS: Long = Random.nextInt(100) * Random.nextInt(100) * 10000
 
-  lazy val expectedResultsMap = mutable.Map[String, UniversalDto]();
+//  val schema: Schema = AvroSchema[UniversalDto]
+//  val encoder: Encoder[UniversalDto] = com.sksamuel.avro4s.Encoder[UniversalDto]
+//  val writer = new GenericDatumWriter[GenericRecord](schema)
 
-  def generateMsgFields(): Map[String, Any] = {
-    val time = Calendar.getInstance().getTime.getTime
+  /*def dtoGenerate[T](session: Session)(implicit genFunction: String =>T): Session = {
+    val customer_id = session(customerIdSessionName).as[String]
+    val t = genFunction(customer_id)
+//    val universalDto = UniversalDto(customer_id, Map(), Map(), Map())
 
-    Map(
-      "uuid" -> java.util.UUID.randomUUID().toString,
-      "process_timestamp" -> time,
-      "expectedResultsMap" -> expectedResultsMap,
-      "operation_id" -> null
-    )
-  }
+    val bytesUniversalDto = AvroUtil.encode[T](t, encoder, writer)
+    session
+      .set(bytesInputDtoSessionName, bytesUniversalDto)
 
-  val schema: Schema = AvroSchema[UniversalDto]
-  val encoder: Encoder[UniversalDto] = com.sksamuel.avro4s.Encoder[UniversalDto]
-  val writer = new GenericDatumWriter[GenericRecord](schema)
+
+  }*/
+
 
   override def createScenarioBuilder: ScenarioBuilder = {
     scenario(s"$scenarioName scenario test")
       .exec(idGenerateActionBuilder(_))
       .repeat(generationParam.countTransaction)({
-
         exec(session => {
           val customer_id = session(customerIdSessionName).as[String]
-          val universalDto = UniversalDto(Map(), Map(), Map(), "sad")
+          val universalDto = UniversalDto(customer_id, Map(), Map(), Map())
 
           val bytesUniversalDto = AvroUtil.encode[UniversalDto](universalDto, encoder, writer)
           session
-
             .set(bytesInputDtoSessionName, bytesUniversalDto)
         })
           .exec(sendToActionBuilder)

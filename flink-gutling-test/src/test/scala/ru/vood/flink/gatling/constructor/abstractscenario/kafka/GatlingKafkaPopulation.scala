@@ -5,7 +5,7 @@ import ru.vood.flink.gatling.config.AdditionalProducerGatlingProp
 import ru.vood.flink.gatling.constructor.abstractscenario.{GatlingPopulation, GatlingProtocol}
 import ru.vood.flink.gatling.constructor.impl.KafkaProtocolCreator
 
-trait GatlingKafkaPopulation extends GatlingPopulation {
+trait GatlingKafkaPopulation[DTO] extends GatlingPopulation[DTO] {
 
   def kafkaConsumerProperty: KafkaConsumerProperty
 
