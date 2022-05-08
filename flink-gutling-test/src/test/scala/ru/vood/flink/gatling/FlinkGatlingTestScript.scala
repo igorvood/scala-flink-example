@@ -11,7 +11,7 @@ import org.apache.avro.generic.{GenericDatumWriter, GenericRecord}
 import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.dto.UniversalDto
 import ru.vood.flink.gatling.common.FooCounter
-import ru.vood.flink.gatling.config.{FlinkGatlingConfig, GenerationParameters}
+import ru.vood.flink.gatling.config.{AdditionalProducerGatlingProp, FlinkGatlingConfig, GenerationParameters}
 import ru.vood.flink.gatling.constructor.impl.KafkaProtocolCreator.GatlingKafkaProtocolPreDef
 
 import java.util.Calendar
@@ -72,7 +72,7 @@ class FlinkGatlingTestScript extends Simulation {
 
   */
   private val kafkaConsumerPropertyFromService = config.flinkJobServiceConfiguration.kafkaConsumerProperty
-
+  implicit private val prop: AdditionalProducerGatlingProp = config.additionalProducerGatlingProp
 
   val kafkaConf: KafkaProtocol = kafka
     .topic(kafkaConsumerPropertyFromService.topicName)

@@ -6,6 +6,6 @@ import io.gatling.core.structure.PopulationBuilder
 trait GatlingPopulation extends GatlingOpenInjectionStep with GatlingScenarioBuilder with GatlingProtocol {
 
   def createPopulationBuilder: PopulationBuilder =
-    createScenarioBuilder.inject(createOpenInjectionStep).protocols(createProtocol)
+    createScenarioBuilder.inject(createOpenInjectionStep).protocols(createProtocol(additionalProducerGatlingProp))
 
 }

@@ -6,7 +6,7 @@ import ru.vood.flink.configuration.PropertyUtil.{asProperty, fullPrefix}
 
 import java.util.Properties
 
-case class KafkaCnsProperty(property: Properties) extends KafkaProperties {
+case class KafkaCnsProperty(property: Properties) extends MandatoryPropertyChecker {
 
   override val requiredProperty: Set[String] =
     Set(

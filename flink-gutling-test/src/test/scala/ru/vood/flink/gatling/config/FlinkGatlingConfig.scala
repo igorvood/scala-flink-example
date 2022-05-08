@@ -6,6 +6,7 @@ import ru.vood.flink.job.FlinkJobConfiguration
 
 case class FlinkGatlingConfig(flinkJobServiceConfiguration: FlinkJobConfiguration,
                               generationParam: GenerationParameters,
+                              additionalProducerGatlingProp: AdditionalProducerGatlingProp,
                              ) {
 
 
@@ -14,7 +15,7 @@ case class FlinkGatlingConfig(flinkJobServiceConfiguration: FlinkJobConfiguratio
 
 object FlinkGatlingConfig extends GatlingConfig {
 
-  private val gatlingPrefix = "gatling"
+  private val gatlingPrefix = "gatling."
   val generationParametersPrefix: String = gatlingPrefix + "generation.parameters."
 
   def apply(prefix: String = gatlingPrefix): FlinkGatlingConfig = {
@@ -22,7 +23,8 @@ object FlinkGatlingConfig extends GatlingConfig {
     prefix createProperty { prf =>
       FlinkGatlingConfig(
         flinkJobServiceConfiguration = flinkJobServiceConfiguration,
-        generationParam = GenerationParameters(s"${prf}generation.parameters.")
+        generationParam = GenerationParameters(s"${prf}generation.parameters."),
+        additionalProducerGatlingProp = AdditionalProducerGatlingProp(s"${gatlingPrefix}additionalProducerGatlingProp")
       )
     }
   }
