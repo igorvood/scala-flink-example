@@ -32,7 +32,7 @@ case class OnlySendKafkaScenario() extends GatlingScenarioBuilder {
   val fooCounter = new FooCounter(START_USERS)
   val feeder: Iterator[Map[String, Any]] = Iterator.continually(generateMsgFields)
   var expectedResultsMap = mutable.Map[String, UniversalDto]();
-  private def customerIdSessionName = "customer_id"
+  private lazy val customerIdSessionName = "customer_id"
   private lazy val bytesInputDtoSessionName = "bytes_uaspDto"
 
   def generateMsgFields(): Map[String, Any] = {

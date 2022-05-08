@@ -16,7 +16,7 @@ trait GatlingKafkaProtocol extends GatlingProtocol {
 
   implicit val additionalProducerGatlingProp: AdditionalProducerGatlingProp
 
-  implicit val kafkaCnsProperty: KafkaConsumerProperty
+  val kafkaCnsProperty: KafkaConsumerProperty
 
   override def createProtocol: Protocol = kafka
     .topic(kafkaCnsProperty.topicName)
