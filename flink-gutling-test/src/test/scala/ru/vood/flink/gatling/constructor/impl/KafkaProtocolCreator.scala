@@ -32,14 +32,7 @@ object KafkaProtocolCreator {
       prop.stringPropertyNames()
         .stream()
         .forEach(q => bufferProp.put(q, prop.getProperty(q)))
-
       val mapPropForKafka = (bufferProp ++ additionalProducerGatlingProp.addPrp).toMap
-
-      /* bufferProp.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
-       //      bufferProp.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer")
-       bufferProp.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer")
-
-       val mapPropForKafka = bufferProp.toMap*/
       self.properties(mapPropForKafka)
     }
   }

@@ -13,11 +13,9 @@ case class AdditionalProducerGatlingProp(private val adds: Map[String, String]) 
     VALUE_SERIALIZER_CLASS_CONFIG.replace(".","_")
   )
 
-  println(requiredProperty)
-  println(requiredProperty)
   require(badProperties(adds) == "", s"Properties ${badProperties(adds)} must be not null")
 
-  def addPrp : Map[String, String] = adds.map(q=>q._1.replace("_",".") -> q._2)
+  lazy val addPrp : Map[String, String] = adds.map(q=>q._1.replace("_",".") -> q._2)
 
 }
 
