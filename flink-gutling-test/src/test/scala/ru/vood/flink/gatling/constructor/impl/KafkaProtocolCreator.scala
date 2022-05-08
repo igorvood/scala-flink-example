@@ -12,7 +12,7 @@ import ru.vood.flink.gatling.constructor.impl.KafkaProtocolCreator.GatlingKafkaP
 import java.util.Properties
 import scala.collection.mutable
 
-class KafkaProtocolCreator(additional: AdditionalProducerGatlingProp)(implicit kafkaCnsProperty: KafkaConsumerProperty) extends GatlingProtocol {
+case class KafkaProtocolCreator(additional: AdditionalProducerGatlingProp)(implicit kafkaCnsProperty: KafkaConsumerProperty) extends GatlingProtocol {
 
 
   override val additionalProducerGatlingProp: AdditionalProducerGatlingProp = additional

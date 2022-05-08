@@ -13,6 +13,7 @@ import ru.vood.flink.dto.UniversalDto
 import ru.vood.flink.gatling.common.FooCounter
 import ru.vood.flink.gatling.config.{AdditionalProducerGatlingProp, FlinkGatlingConfig, GenerationParameters}
 import ru.vood.flink.gatling.constructor.impl.KafkaProtocolCreator.GatlingKafkaProtocolPreDef
+import ru.vood.flink.gatling.constructor.scenario.SimpleScenario
 
 import java.util.Calendar
 import scala.collection.mutable
@@ -20,7 +21,7 @@ import scala.util.Random
 
 class FlinkGatlingTestScript extends Simulation {
 
-  val config: FlinkGatlingConfig = FlinkGatlingConfig.apply()
+  implicit val config: FlinkGatlingConfig = FlinkGatlingConfig.apply()
 
   def startUserNumberFrom(): Long = Random.nextInt(100) * Random.nextInt(100) * 10000
 
@@ -71,41 +72,10 @@ class FlinkGatlingTestScript extends Simulation {
     val fooCounter = new FooCounter(START_USERS)
 
   */
-  private val kafkaConsumerPropertyFromService = config.flinkJobServiceConfiguration.kafkaConsumerProperty
-  implicit private val prop: AdditionalProducerGatlingProp = config.additionalProducerGatlingProp
 
-  val kafkaConf: KafkaProtocol = kafka
-    .topic(kafkaConsumerPropertyFromService.topicName)
-    .propertiesFromProp(kafkaConsumerPropertyFromService.propertiesConsumer)
-
-  private val customerIdSessionName = "customer_id"
-  private val bytesInputDtoSessionName = "bytes_uaspDto"
-  val scenarioBusinessRules = scenario(" BusinessRulesTest")
-    .exec(session => {
-      val customer_id = prefix + fooCounter.inc()
-      val updateSession: Session = session
-        .set(customerIdSessionName, customer_id)
-        .set("countMessages", 0L)
-      updateSession
-    })
-    .repeat(generationParam.countTransaction)({
-
-      feed(feeder)
-        .exec(session => {
-          val customer_id = session(customerIdSessionName).as[String]
-          val uaspDto = UniversalDto(Map(), Map(), Map(), "sad")
-
-          val bytes_uaspDto = AvroUtil.encode[UniversalDto](uaspDto, encoder, writer)
-          session
-
-            .set(bytesInputDtoSessionName, bytes_uaspDto)
-        })
-        .exec(kafka("Request for classification").send[String, Array[Byte]]("${" + customerIdSessionName + "}", "${" + bytesInputDtoSessionName + "}")
-        )
-    })
 
 
   setUp(
-    scenarioBusinessRules.inject(atOnceUsers(generationParam.countUsers)).protocols(kafkaConf)
+    SimpleScenario().createPopulationBuilder
   )
 }
