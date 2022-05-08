@@ -7,6 +7,7 @@ import ru.vood.flink.gatling.constructor.impl.{KafkaProtocolCreator, OnlySendKaf
 case class SimpleScenario(implicit config: FlinkGatlingConfig) extends GatlingPopulation {
 
   override val gatlingOpenInjectionStep: GatlingOpenInjectionStep = UserByTransactionStep(config.generationParam)
+
   override val gatlingScenarioBuilder: GatlingScenarioBuilder = OnlySendKafkaScenario()
 
   override val gatlingProtocol: GatlingProtocol = KafkaProtocolCreator(config.additionalProducerGatlingProp)(config.flinkJobServiceConfiguration.kafkaConsumerProperty)

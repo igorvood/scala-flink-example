@@ -3,6 +3,7 @@ package ru.vood.flink.gatling.constructor.impl
 import com.github.mnogu.gatling.kafka.Predef.kafka
 import com.sksamuel.avro4s.{AvroSchema, Encoder}
 import io.gatling.core.Predef._
+import io.gatling.core.action.builder.ActionBuilder
 import io.gatling.core.session.Session
 import io.gatling.core.structure.ScenarioBuilder
 import org.apache.avro.Schema
@@ -17,7 +18,10 @@ import java.util.Calendar
 import scala.collection.mutable
 import scala.util.Random
 
-case  class OnlySendKafkaScenario() extends GatlingScenarioBuilder {
+case class OnlySendKafkaScenario() extends GatlingScenarioBuilder {
+
+  override implicit val sendToActionBuilder: ActionBuilder = kafka("Request for classification").send[String, Array[Byte]]("${" + customerIdSessionName + "}", "${" + bytesInputDtoSessionName + "}")
+
   val config: FlinkGatlingConfig = FlinkGatlingConfig.apply()
 
   def startUserNumberFrom(): Long = Random.nextInt(100) * Random.nextInt(100) * 10000
@@ -28,8 +32,8 @@ case  class OnlySendKafkaScenario() extends GatlingScenarioBuilder {
   val fooCounter = new FooCounter(START_USERS)
   val feeder: Iterator[Map[String, Any]] = Iterator.continually(generateMsgFields)
   var expectedResultsMap = mutable.Map[String, UniversalDto]();
-  private val customerIdSessionName = "customer_id"
-  private val bytesInputDtoSessionName = "bytes_uaspDto"
+  private def customerIdSessionName = "customer_id"
+  private def bytesInputDtoSessionName = "bytes_uaspDto"
 
   def generateMsgFields(): Map[String, Any] = {
     val time = Calendar.getInstance().getTime.getTime
@@ -67,8 +71,7 @@ case  class OnlySendKafkaScenario() extends GatlingScenarioBuilder {
 
               .set(bytesInputDtoSessionName, bytes_uaspDto)
           })
-          .exec(kafka("Request for classification").send[String, Array[Byte]]("${" + customerIdSessionName + "}", "${" + bytesInputDtoSessionName + "}")
-          )
+          .exec(sendToActionBuilder)
       })
   }
 }
