@@ -5,4 +5,6 @@ trait SessionParamNames {
   protected lazy val customerIdSessionName = "customer_id"
   protected lazy val bytesInputDtoSessionName = "bytes_uaspDto"
 
+  protected lazy val countMessages = "countMessages"
+
 }

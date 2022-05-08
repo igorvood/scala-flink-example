@@ -2,7 +2,7 @@ package ru.vood.flink.gatling.constructor.impl
 
 import com.github.mnogu.gatling.kafka.Predef.kafka
 import com.sksamuel.avro4s.{AvroSchema, Encoder}
-import io.gatling.core.Predef.{Session, _}
+import io.gatling.core.Predef._
 import io.gatling.core.action.builder.ActionBuilder
 import io.gatling.core.structure.ScenarioBuilder
 import org.apache.avro.Schema
@@ -20,28 +20,11 @@ case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBu
 
   lazy val config: FlinkGatlingConfig = FlinkGatlingConfig.apply()
 
-  implicit lazy val asda = config.generationParam
+  implicit lazy val generationParam: GenerationParameters = config.generationParam
 
   override implicit val sendToActionBuilder: ActionBuilder = kafka(scenarioName + " kafka request").send[String, Array[Byte]]("${" + customerIdSessionName + "}", "${" + bytesInputDtoSessionName + "}")
 
-  override def START_USERS: Long = startUserNumberFrom()
-
-
-  def idGenerateActionBuilder(session: Session)(implicit generationParameters: GenerationParameters): Session = {
-    val prefix = generationParam.prefixIdentity.getOrElse("")
-    val customer_id = prefix + fooCounter.inc()
-    val updateSession: Session = session
-      .set(customerIdSessionName, customer_id)
-      .set("countMessages", 0L)
-    updateSession
-  }
-
-
-  def startUserNumberFrom(): Long = Random.nextInt(100) * Random.nextInt(100) * 10000
-
-
-  private lazy val generationParam: GenerationParameters = config.generationParam
-
+  override def START_USERS: Long = Random.nextInt(100) * Random.nextInt(100) * 10000
 
   lazy val feeder: Iterator[Map[String, Any]] = Iterator.continually(generateMsgFields)
   lazy val expectedResultsMap = mutable.Map[String, UniversalDto]();
@@ -65,7 +48,6 @@ case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBu
     scenario(s"$scenarioName scenario test")
       .exec(idGenerateActionBuilder(_))
       .repeat(generationParam.countTransaction)({
-
         feed(feeder)
           .exec(session => {
             val customer_id = session(customerIdSessionName).as[String]
