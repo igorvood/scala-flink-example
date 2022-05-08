@@ -5,8 +5,6 @@ import ru.vood.flink.gatling.config.AdditionalProducerGatlingProp
 
 trait GatlingProtocol {
 
-  val additionalProducerGatlingProp: AdditionalProducerGatlingProp
-
-  def createProtocol(implicit additionalProducerGatlingProp: AdditionalProducerGatlingProp): Protocol
+  def createProtocol: Protocol
 
 }
