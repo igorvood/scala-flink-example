@@ -26,7 +26,6 @@ case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBu
 
   override def START_USERS: Long = Random.nextInt(100) * Random.nextInt(100) * 10000
 
-  lazy val feeder: Iterator[Map[String, Any]] = Iterator.continually(generateMsgFields)
   lazy val expectedResultsMap = mutable.Map[String, UniversalDto]();
 
   def generateMsgFields(): Map[String, Any] = {
@@ -48,16 +47,16 @@ case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBu
     scenario(s"$scenarioName scenario test")
       .exec(idGenerateActionBuilder(_))
       .repeat(generationParam.countTransaction)({
-        feed(feeder)
-          .exec(session => {
-            val customer_id = session(customerIdSessionName).as[String]
-            val uaspDto = UniversalDto(Map(), Map(), Map(), "sad")
 
-            val bytes_uaspDto = AvroUtil.encode[UniversalDto](uaspDto, encoder, writer)
-            session
+        exec(session => {
+          val customer_id = session(customerIdSessionName).as[String]
+          val universalDto = UniversalDto(Map(), Map(), Map(), "sad")
 
-              .set(bytesInputDtoSessionName, bytes_uaspDto)
-          })
+          val bytesUniversalDto = AvroUtil.encode[UniversalDto](universalDto, encoder, writer)
+          session
+
+            .set(bytesInputDtoSessionName, bytesUniversalDto)
+        })
           .exec(sendToActionBuilder)
       })
   }
