@@ -5,6 +5,7 @@ import io.gatling.core.structure.ScenarioBuilder
 import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.gatling.common.FooCounter
 import ru.vood.flink.gatling.config.GenerationParameters
+import ru.vood.flink.gatling.constructor.data.TestCaseData
 
 trait GatlingScenarioBuilder[DTO_IN] extends SessionParamNames with DtoGenerate[DTO_IN] with GatlingScenarioSender {
 
