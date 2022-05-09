@@ -19,18 +19,18 @@ case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBu
 
   lazy val config: FlinkGatlingConfig = FlinkGatlingConfig.apply()
 
-  implicit lazy val generationParam: GenerationParameters = config.generationParam
+  override implicit val generationParameters: GenerationParameters = config.generationParam
 
   override def START_USERS: Long = Random.nextInt(100) * Random.nextInt(100) * 10000
 
   override implicit val genFunction: String => UniversalDto = s => UniversalDto(s, Map(), Map(), Map())
 
-  override def createScenarioBuilder: ScenarioBuilder = {
+ /* override def createScenarioBuilder: ScenarioBuilder = {
     scenario(s"$scenarioName scenario test")
       .exec(idGenerateActionBuilder(_))
-      .repeat(generationParam.countTransaction)({
+      .repeat(generationParameters.countTransaction)({
         exec(dtoGenerate(_))
           .exec(sendToActionBuilder)
       })
-  }
+  }*/
 }

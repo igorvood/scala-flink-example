@@ -1,6 +1,7 @@
 package ru.vood.flink.gatling.constructor.abstractscenario
 
-import io.gatling.core.Predef.Session
+import io.gatling.core.Predef._
+import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
 import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.gatling.common.FooCounter
@@ -14,7 +15,16 @@ trait GatlingScenarioBuilder[DTO] extends SessionParamNames with DtoGenerate[DTO
 
   protected lazy val fooCounter = new FooCounter(START_USERS)
 
-  def createScenarioBuilder: ScenarioBuilder
+  implicit val generationParameters: GenerationParameters
+
+  def createScenarioBuilder: ScenarioBuilder = {
+    scenario(s"$scenarioName scenario test")
+      .exec(idGenerateActionBuilder(_))
+      .repeat(generationParameters.countTransaction)({
+        exec(dtoGenerate(_))
+          .exec(sendToActionBuilder)
+      })
+  }
 
   def idGenerateActionBuilder(session: Session)(implicit generationParameters: GenerationParameters): Session = {
     val prefix = generationParameters.prefixIdentity.getOrElse("")
@@ -35,8 +45,7 @@ trait GatlingScenarioBuilder[DTO] extends SessionParamNames with DtoGenerate[DTO
     val bytesUniversalDto = AvroUtil.encode[DTO](t, encoder, writer)
     session
       .set(bytesInputDtoSessionName, bytesUniversalDto)
-
-
   }
 
 }
+

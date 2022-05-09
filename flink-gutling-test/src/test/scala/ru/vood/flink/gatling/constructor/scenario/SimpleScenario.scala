@@ -3,8 +3,8 @@ package ru.vood.flink.gatling.constructor.scenario
 import ru.vood.flink.configuration.example.KafkaConsumerProperty
 import ru.vood.flink.dto.UniversalDto
 import ru.vood.flink.gatling.config.{AdditionalProducerGatlingProp, FlinkGatlingConfig}
+import ru.vood.flink.gatling.constructor.abstractscenario.GatlingOpenInjectionStep
 import ru.vood.flink.gatling.constructor.abstractscenario.kafka.GatlingKafkaPopulation
-import ru.vood.flink.gatling.constructor.abstractscenario.{GatlingOpenInjectionStep, GatlingScenarioBuilder}
 import ru.vood.flink.gatling.constructor.impl.{OnlySendKafkaScenario, UserByTransactionStep}
 
 case class SimpleScenario(implicit config: FlinkGatlingConfig) extends GatlingKafkaPopulation[UniversalDto] {
@@ -15,7 +15,7 @@ case class SimpleScenario(implicit config: FlinkGatlingConfig) extends GatlingKa
 
   override val gatlingOpenInjectionStep: GatlingOpenInjectionStep = UserByTransactionStep(config.generationParam)
 
-  override val gatlingScenarioBuilder = OnlySendKafkaScenario("DATA1")
+  override val gatlingScenarioBuilder: OnlySendKafkaScenario = OnlySendKafkaScenario("DATA1")
 
 
 }
