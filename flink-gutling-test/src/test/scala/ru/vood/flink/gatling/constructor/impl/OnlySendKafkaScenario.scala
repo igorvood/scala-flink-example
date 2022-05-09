@@ -15,11 +15,11 @@ case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBu
 
   override def encoder: Encoder[UniversalDto] = Encoder[UniversalDto]
 
-  lazy val config: FlinkGatlingConfig = FlinkGatlingConfig.apply()
+  lazy val config: FlinkGatlingConfig = FlinkGatlingConfig()
 
   override implicit val generationParameters: GenerationParameters = config.generationParam
 
-  override def START_USERS: Long = Random.nextInt(100) * Random.nextInt(100) * 10000
+  override def startUsersNum: Long = Random.nextInt(100) * Random.nextInt(100) * 10000
 
   override implicit val genFunction: String => UniversalDto = s => UniversalDto(s, Map(), Map(), Map())
 

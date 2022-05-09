@@ -11,9 +11,9 @@ trait GatlingScenarioBuilder[DTO] extends SessionParamNames with DtoGenerate[DTO
 
   val scenarioName: String
 
-  def START_USERS: Long
+  def startUsersNum: Long
 
-  protected lazy val fooCounter = new FooCounter(START_USERS)
+  protected lazy val fooCounter = new FooCounter(startUsersNum)
 
   implicit val generationParameters: GenerationParameters
 
