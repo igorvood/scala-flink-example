@@ -1,8 +1,6 @@
 package ru.vood.flink.gatling.constructor.impl
 
 import com.sksamuel.avro4s.{AvroSchema, Encoder}
-import io.gatling.core.Predef._
-import io.gatling.core.structure.ScenarioBuilder
 import org.apache.avro.Schema
 import ru.vood.flink.dto.UniversalDto
 import ru.vood.flink.gatling.config.{FlinkGatlingConfig, GenerationParameters}
@@ -25,12 +23,4 @@ case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBu
 
   override implicit val genFunction: String => UniversalDto = s => UniversalDto(s, Map(), Map(), Map())
 
- /* override def createScenarioBuilder: ScenarioBuilder = {
-    scenario(s"$scenarioName scenario test")
-      .exec(idGenerateActionBuilder(_))
-      .repeat(generationParameters.countTransaction)({
-        exec(dtoGenerate(_))
-          .exec(sendToActionBuilder)
-      })
-  }*/
 }

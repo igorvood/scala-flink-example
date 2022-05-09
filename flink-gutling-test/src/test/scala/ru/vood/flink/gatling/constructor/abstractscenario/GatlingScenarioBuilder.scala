@@ -17,9 +17,16 @@ trait GatlingScenarioBuilder[DTO] extends SessionParamNames with DtoGenerate[DTO
 
   implicit val generationParameters: GenerationParameters
 
+
+  def genId = scenario(s"$scenarioName scenario test")
+    .exec(idGenerateActionBuilder(_))
+
   def createScenarioBuilder: ScenarioBuilder = {
-    scenario(s"$scenarioName scenario test")
-      .exec(idGenerateActionBuilder(_))
+    genTransaction(genId)
+  }
+
+  private def genTransaction(builder: ScenarioBuilder) = {
+    builder
       .repeat(generationParameters.countTransaction)({
         exec(dtoGenerate(_))
           .exec(sendToActionBuilder)
@@ -37,7 +44,7 @@ trait GatlingScenarioBuilder[DTO] extends SessionParamNames with DtoGenerate[DTO
 
   implicit val genFunction: String => DTO
 
-  def dtoGenerate(session: Session)(implicit genFunction: String => DTO): Session = {
+  private def dtoGenerate(session: Session)(implicit genFunction: String => DTO): Session = {
     val customer_id = session(customerIdSessionName).as[String]
     val t = genFunction(customer_id)
     //    val universalDto = UniversalDto(customer_id, Map(), Map(), Map())
