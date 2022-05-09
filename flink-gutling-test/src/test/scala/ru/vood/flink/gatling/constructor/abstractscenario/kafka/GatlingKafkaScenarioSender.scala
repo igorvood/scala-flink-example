@@ -9,5 +9,5 @@ trait GatlingKafkaScenarioSender extends GatlingScenarioSender with SessionParam
 
   val scenarioName: String
 
-  override implicit val sendToActionBuilder: ActionBuilder = kafka(scenarioName+ " "+  "case_name" + " kafka request").send[String, Array[Byte]]("${" + customerIdSessionName + "}", "${" + bytesInputDtoSessionName + "}")
+  override implicit val sendToActionBuilder: ActionBuilder = kafka(scenarioName + " ${" + testCaseName + "} kafka request").send[String, Array[Byte]]("${" + customerIdSessionName + "}", "${" + bytesInputDtoSessionName + "}")
 }
