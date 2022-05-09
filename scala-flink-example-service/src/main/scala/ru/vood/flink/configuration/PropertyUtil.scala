@@ -27,7 +27,8 @@ object PropertyUtil extends Serializable {
 
   def getPropsFromMap(props: Map[String, String]): Properties = {
     val properites = new Properties()
-    properites.putAll(props.asJava)
+    props.foreach(q=> properites.put(q._1,q._2))
+//    properites.putAll(props.asJava)
     properites
   }
 
