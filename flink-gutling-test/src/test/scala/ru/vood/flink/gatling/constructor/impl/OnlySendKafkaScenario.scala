@@ -17,6 +17,6 @@ case class OnlySendKafkaScenario(scenarioName: String) extends GatlingScenarioBu
 
   override implicit val generationParameters: GenerationParameters = config.generationParam
 
-  override def startUsersNum: Long = Random.nextInt(100) * Random.nextInt(100) * 10000
+//  override def startUsersNum: Long = Random.nextInt(100) * Random.nextInt(100) * 10000
 
 }

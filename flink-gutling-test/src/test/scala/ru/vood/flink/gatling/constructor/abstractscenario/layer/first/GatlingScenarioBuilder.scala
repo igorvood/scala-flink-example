@@ -17,11 +17,11 @@ trait GatlingScenarioBuilder[DTO_IN] extends SessionParamNamesConvensions with G
 
   val scenarioName: String
 
-  def startUsersNum: Long
+  implicit def generationParameters: GenerationParameters
 
-  protected lazy val fooCounter = new FooCounter(startUsersNum)
+  protected lazy val fooCounter = new FooCounter(generationParameters.startUsersIdentity)
 
-  implicit val generationParameters: GenerationParameters
+
 
   /*
     def kafkaPropertyForConsumerService: KafkaProducerProperty
