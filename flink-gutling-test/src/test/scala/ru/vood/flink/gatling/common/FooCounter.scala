@@ -2,6 +2,7 @@ package ru.vood.flink.gatling.common
 
 import java.util.concurrent.atomic.AtomicLong
 
+@deprecated
 class FooCounter(initialValue:Long) {
   val counter = new AtomicLong(initialValue)
   def get():Long = counter.get()
