@@ -5,7 +5,7 @@ import io.gatling.core.structure.ScenarioBuilder
 import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.gatling.common.FooCounter
 import ru.vood.flink.gatling.config.GenerationParameters
-import ru.vood.flink.gatling.constructor.abstractscenario.{DtoGenerate, GatlingScenarioSender, SessionParamNames}
+import ru.vood.flink.gatling.constructor.abstractscenario.{DtoGenerate, SessionParamNames}
 import ru.vood.flink.gatling.constructor.data.TestCaseData
 import io.gatling.core.Predef._
 

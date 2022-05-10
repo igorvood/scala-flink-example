@@ -4,6 +4,7 @@ import com.sksamuel.avro4s.Encoder
 import org.apache.avro.Schema
 import org.apache.avro.generic.{GenericDatumWriter, GenericRecord}
 
+@deprecated
 trait DtoGenerate[DTO] {
 
   /*

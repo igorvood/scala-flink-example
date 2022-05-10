@@ -1,4 +1,4 @@
-package ru.vood.flink.gatling.constructor.data
+package ru.vood.flink.gatling.constructor.scenario
 
 import com.sksamuel.avro4s.{AvroSchema, Decoder, Encoder}
 import org.apache.avro.Schema

@@ -3,7 +3,8 @@ package ru.vood.flink.gatling.constructor.abstractscenario.layer.second.kafka
 import com.github.mnogu.gatling.kafka.Predef.kafka
 import io.gatling.core.Predef._
 import io.gatling.core.action.builder.ActionBuilder
-import ru.vood.flink.gatling.constructor.abstractscenario.{GatlingScenarioSender, SessionParamNames}
+import ru.vood.flink.gatling.constructor.abstractscenario.SessionParamNames
+import ru.vood.flink.gatling.constructor.abstractscenario.layer.first.GatlingScenarioSender
 
 trait GatlingKafkaScenarioSender extends GatlingScenarioSender with SessionParamNames {
 

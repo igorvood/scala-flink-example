@@ -1,4 +1,4 @@
-package ru.vood.flink.gatling.constructor.abstractscenario
+package ru.vood.flink.gatling.constructor.abstractscenario.layer.first
 
 import io.gatling.core.action.builder.ActionBuilder
 
