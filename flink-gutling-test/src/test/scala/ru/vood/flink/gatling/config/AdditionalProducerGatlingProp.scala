@@ -9,13 +9,13 @@ import ru.vood.flink.configuration.example.MandatoryPropertyChecker
 case class AdditionalProducerGatlingProp(private val adds: Map[String, String]) extends MandatoryPropertyChecker {
 
   override val requiredProperty: Set[String] = Set(
-    KEY_SERIALIZER_CLASS_CONFIG.replace(".","_"),
-    VALUE_SERIALIZER_CLASS_CONFIG.replace(".","_")
+    KEY_SERIALIZER_CLASS_CONFIG.replace(".", "_"),
+    VALUE_SERIALIZER_CLASS_CONFIG.replace(".", "_")
   )
 
   require(badProperties(adds) == "", s"Properties ${badProperties(adds)} must be not null")
 
-  lazy val addPrp : Map[String, String] = adds.map(q=>q._1.replace("_",".") -> q._2)
+  lazy val addPrp: Map[String, String] = adds.map(q => q._1.replace("_", ".") -> q._2)
 
 }
 

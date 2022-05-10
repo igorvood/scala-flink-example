@@ -6,8 +6,8 @@ import io.gatling.core.Predef._
 import io.gatling.core.protocol.Protocol
 import ru.vood.flink.configuration.example.KafkaConsumerProperty
 import ru.vood.flink.gatling.config.AdditionalProducerGatlingProp
-import GatlingKafkaProtocol.GatlingKafkaProtocolPreDef
 import ru.vood.flink.gatling.constructor.abstractscenario.layer.first.GatlingProtocol
+import ru.vood.flink.gatling.constructor.abstractscenario.layer.second.kafka.GatlingKafkaProtocol.GatlingKafkaProtocolPreDef
 
 import java.util.Properties
 import scala.collection.mutable

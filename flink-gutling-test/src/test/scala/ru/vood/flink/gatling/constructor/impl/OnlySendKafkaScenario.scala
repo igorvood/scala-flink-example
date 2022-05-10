@@ -4,7 +4,6 @@ import ru.vood.flink.dto.UniversalDto
 import ru.vood.flink.gatling.config.{FlinkGatlingConfig, GenerationParameters}
 import ru.vood.flink.gatling.constructor.abstractscenario.layer.first.GatlingScenarioBuilder
 import ru.vood.flink.gatling.constructor.abstractscenario.layer.second.kafka.GatlingKafkaScenarioSender
-import ru.vood.flink.gatling.constructor.data.TestCaseData
 import ru.vood.flink.gatling.constructor.data.intf.TestingDataType
 import ru.vood.flink.gatling.constructor.scenario.UniversalDtoGenerator
 

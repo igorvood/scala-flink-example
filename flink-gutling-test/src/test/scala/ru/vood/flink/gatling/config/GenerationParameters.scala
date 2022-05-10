@@ -32,7 +32,7 @@ object GenerationParameters {
       new GenerationParameters(
         prefixIdentity = Option.apply(propertyVal(prf, "prefixIdentity")),
         countTransaction = propertyVal(prf, "countTransaction", "1").toInt,
-        countUsers =  propertyVal(prf, "countUsers", "1").toInt,
+        countUsers = propertyVal(prf, "countUsers", "1").toInt,
         startUsersIdentity = propertyVal(prf, "startUsersIdentity", startUserNumberFrom().toString).toLong,
       )
     }

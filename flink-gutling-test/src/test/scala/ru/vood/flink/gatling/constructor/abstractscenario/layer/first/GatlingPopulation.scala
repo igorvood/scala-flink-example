@@ -1,7 +1,7 @@
 package ru.vood.flink.gatling.constructor.abstractscenario.layer.first
 
-import io.gatling.core.structure.PopulationBuilder
 import io.gatling.core.Predef._
+import io.gatling.core.structure.PopulationBuilder
 
 
 trait GatlingPopulation[DTO_IN] {

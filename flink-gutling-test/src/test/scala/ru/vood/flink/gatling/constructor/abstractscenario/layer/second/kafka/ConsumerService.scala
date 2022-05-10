@@ -41,7 +41,7 @@ class ConsumerService[V](properties: Properties,
   override def run(): Unit = {
     try {
       kafkaConsumer.subscribe(topics)
-//      println("subscribe: " + topics)
+      //      println("subscribe: " + topics)
       var i: Long = 0
       while (flag.get() == 0) {
         val records = kafkaConsumer.poll(Duration.ofSeconds(0L))

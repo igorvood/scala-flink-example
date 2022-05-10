@@ -13,7 +13,7 @@ trait ConsumerRecordAccumulator[V] {
 
   def prefix: String
 
-  val decoder : Decoder[V]
+  val decoder: Decoder[V]
 
   val records: ConcurrentHashMap[String, V] =
     new ConcurrentHashMap[String, V]()
