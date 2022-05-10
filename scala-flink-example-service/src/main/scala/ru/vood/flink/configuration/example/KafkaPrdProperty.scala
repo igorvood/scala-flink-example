@@ -9,7 +9,7 @@ import java.util.Properties
 case class KafkaPrdProperty(property: Properties) extends MandatoryPropertyChecker {
 
   override val requiredProperty: Set[String] = Set("bootstrap.servers", "transaction.timeout.ms")
-  require(badProperties(property) == "", s"Properties ${badProperties(property)} must be not null")
+  require(nullProperties(property) == "", s"Properties ${nullProperties(property)} must be not null")
 
   override def toString: String =
     s"""KafkaProperty{

@@ -13,7 +13,7 @@ case class KafkaCnsProperty(property: Properties) extends MandatoryPropertyCheck
       "bootstrap.servers",
       "group.id"
     )
-  require(badProperties(property) == "", s"Properties ${badProperties(property)} must be not null")
+  require(nullProperties(property) == "", s"Properties ${nullProperties(property)} must be not null")
 
   override def toString: String =
     s"""KafkaProperty{
