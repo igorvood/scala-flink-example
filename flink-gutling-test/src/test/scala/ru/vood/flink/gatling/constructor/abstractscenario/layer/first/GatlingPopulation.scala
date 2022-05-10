@@ -1,7 +1,8 @@
-package ru.vood.flink.gatling.constructor.abstractscenario
+package ru.vood.flink.gatling.constructor.abstractscenario.layer.first
 
-import io.gatling.core.Predef.openInjectionProfileFactory
 import io.gatling.core.structure.PopulationBuilder
+import io.gatling.core.Predef._
+
 
 trait GatlingPopulation[DTO_IN] {
 

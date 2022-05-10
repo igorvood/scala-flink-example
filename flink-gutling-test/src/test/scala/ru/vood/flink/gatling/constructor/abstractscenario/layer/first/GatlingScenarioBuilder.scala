@@ -1,11 +1,13 @@
-package ru.vood.flink.gatling.constructor.abstractscenario
+package ru.vood.flink.gatling.constructor.abstractscenario.layer.first
 
-import io.gatling.core.Predef._
+import io.gatling.core.Predef.{Session, exec, scenario}
 import io.gatling.core.structure.ScenarioBuilder
 import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.gatling.common.FooCounter
 import ru.vood.flink.gatling.config.GenerationParameters
+import ru.vood.flink.gatling.constructor.abstractscenario.{DtoGenerate, GatlingScenarioSender, SessionParamNames}
 import ru.vood.flink.gatling.constructor.data.TestCaseData
+import io.gatling.core.Predef._
 
 trait GatlingScenarioBuilder[DTO_IN] extends SessionParamNames with DtoGenerate[DTO_IN] with GatlingScenarioSender {
 
@@ -62,4 +64,3 @@ trait GatlingScenarioBuilder[DTO_IN] extends SessionParamNames with DtoGenerate[
   }
 
 }
-

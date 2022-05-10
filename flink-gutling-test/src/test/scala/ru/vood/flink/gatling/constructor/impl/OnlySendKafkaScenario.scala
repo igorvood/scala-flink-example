@@ -5,7 +5,7 @@ import org.apache.avro.Schema
 import ru.vood.flink.dto.UniversalDto
 import ru.vood.flink.gatling.config.{FlinkGatlingConfig, GenerationParameters}
 import ru.vood.flink.gatling.constructor.abstractscenario.kafka.GatlingKafkaScenarioSender
-import ru.vood.flink.gatling.constructor.abstractscenario.GatlingScenarioBuilder
+import ru.vood.flink.gatling.constructor.abstractscenario.layer.first.GatlingScenarioBuilder
 import ru.vood.flink.gatling.constructor.data.TestCaseData
 
 import scala.util.Random
