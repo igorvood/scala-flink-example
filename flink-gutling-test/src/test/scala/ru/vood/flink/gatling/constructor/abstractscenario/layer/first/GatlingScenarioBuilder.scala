@@ -47,13 +47,13 @@ trait GatlingScenarioBuilder[DTO_IN] extends SessionParamNames with GatlingScena
     val prefix = generationParameters.prefixIdentity.getOrElse("")
     val customer_id = prefix + fooCounter.inc()
     val updateSession: Session = session
-      .set(customerIdSessionName, customer_id)
+      .set(inputIdDtoSessionName, customer_id)
       .set(countMessages, 0L)
     updateSession
   }
 
   protected def dtoGenerate(session: Session)(implicit genFunction: String => TestCaseData[DTO_IN]): Session = {
-    val customer_id = session(customerIdSessionName).as[String]
+    val customer_id = session(inputIdDtoSessionName).as[String]
     val testCaseData = genFunction(customer_id)
     val bytesUniversalDto = AvroUtil.encode[DTO_IN](testCaseData.data, testingDataType.inputMeta.encoder, testingDataType.inputMeta.writer)
     session
