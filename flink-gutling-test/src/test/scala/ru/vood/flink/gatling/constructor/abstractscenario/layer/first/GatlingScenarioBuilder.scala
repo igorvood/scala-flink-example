@@ -5,11 +5,11 @@ import io.gatling.core.structure.ScenarioBuilder
 import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.gatling.common.FooCounter
 import ru.vood.flink.gatling.config.GenerationParameters
-import ru.vood.flink.gatling.constructor.abstractscenario.SessionParamNames
+import ru.vood.flink.gatling.constructor.abstractscenario.SessionParamNamesConvensions
 import ru.vood.flink.gatling.constructor.data.TestCaseData
 import ru.vood.flink.gatling.constructor.data.intf.TestingDataType
 
-trait GatlingScenarioBuilder[DTO_IN] extends SessionParamNames with GatlingScenarioSender {
+trait GatlingScenarioBuilder[DTO_IN] extends SessionParamNamesConvensions with GatlingScenarioSender {
 
   val testingDataType: TestingDataType[DTO_IN, DTO_IN]
 

@@ -4,6 +4,7 @@ import ru.tinkoff.gatling.feeders._
 import ru.vood.flink.configuration.AllApplicationProperties
 import ru.vood.flink.configuration.PrefixProperty.PredefPrefix
 import ru.vood.flink.configuration.PropertyUtil.propertyVal
+import ru.vood.flink.gatling.constructor.abstractscenario.SessionParamNamesConvensions
 
 import scala.collection.immutable
 import scala.util.Random
@@ -12,8 +13,7 @@ case class GenerationParameters(prefixIdentity: Option[String],
                                 countTransaction: Int,
                                 countUsers: Int,
                                 startUsersIdentity: Long, // = startUserNumberFrom()
-                               ) {
-  val localCustomerId = "local_customer_id"
+                               ) extends SessionParamNamesConvensions {
   val userCount = 1
   //  val countTransaction = 1
   lazy val ids: Int => immutable.Seq[String] = { cnt =>

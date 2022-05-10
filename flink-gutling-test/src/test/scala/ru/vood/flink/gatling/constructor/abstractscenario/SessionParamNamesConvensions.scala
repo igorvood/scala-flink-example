@@ -1,6 +1,6 @@
 package ru.vood.flink.gatling.constructor.abstractscenario
 
-trait SessionParamNames {
+trait SessionParamNamesConvensions {
 
   protected lazy val testCaseName = "testCaseName"
 
@@ -8,5 +8,7 @@ trait SessionParamNames {
   protected lazy val bytesInputDtoSessionName = "bytes_uaspDto"
 
   protected lazy val countMessages = "countMessages"
+
+  val localCustomerId = "local_customer_id"
 
 }
