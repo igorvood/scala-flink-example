@@ -14,14 +14,14 @@ case class GenerationParameters(prefixIdentity: Option[String],
                                 countUsers: Int,
                                 startUsersIdentity: Long, // = startUserNumberFrom()
                                ) extends SessionParamNamesConvensions {
-  val userCount = 1
-  //  val countTransaction = 1
+
+
   lazy val ids: Int => immutable.Seq[String] = { cnt =>
     val strings = for (i <- 1 to cnt) yield (i).toString
     strings
   }
 
-  lazy val ids2feeder: IndexedSeq[Map[String, String]] = ids(userCount * countTransaction).toFeeder(localCustomerId)
+  lazy val ids2feeder: IndexedSeq[Map[String, String]] = ids(countUsers * countTransaction).toFeeder(localCustomerId)
 
 }
 
