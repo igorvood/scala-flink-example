@@ -1,4 +1,4 @@
-package ru.vood.flink.gatling.constructor.abstractscenario.kafka
+package ru.vood.flink.gatling.constructor.abstractscenario.layer.second.kafka
 
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import ru.vood.flink.configuration.example.KafkaProducerProperty

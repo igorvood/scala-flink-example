@@ -1,4 +1,4 @@
-package ru.vood.flink.gatling.constructor.abstractscenario.kafka
+package ru.vood.flink.gatling.constructor.abstractscenario.layer.second.kafka
 
 import com.github.mnogu.gatling.kafka.Predef.kafka
 import io.gatling.core.Predef._

@@ -1,4 +1,4 @@
-package ru.vood.flink.gatling.constructor.abstractscenario.kafka
+package ru.vood.flink.gatling.constructor.abstractscenario.layer.second.kafka
 
 import com.sksamuel.avro4s.Decoder
 import org.apache.avro.generic.{GenericDatumReader, GenericRecord}
