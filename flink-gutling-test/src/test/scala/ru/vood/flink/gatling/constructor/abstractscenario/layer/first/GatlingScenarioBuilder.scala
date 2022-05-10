@@ -1,15 +1,19 @@
 package ru.vood.flink.gatling.constructor.abstractscenario.layer.first
 
-import io.gatling.core.Predef.{Session, exec, scenario}
+import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
 import ru.vood.flink.avro.AvroUtil
 import ru.vood.flink.gatling.common.FooCounter
 import ru.vood.flink.gatling.config.GenerationParameters
-import ru.vood.flink.gatling.constructor.abstractscenario.{DtoGenerate, SessionParamNames}
+import ru.vood.flink.gatling.constructor.abstractscenario.SessionParamNames
 import ru.vood.flink.gatling.constructor.data.TestCaseData
-import io.gatling.core.Predef._
+import ru.vood.flink.gatling.constructor.data.intf.TestingDataType
 
-trait GatlingScenarioBuilder[DTO_IN] extends SessionParamNames with DtoGenerate[DTO_IN] with GatlingScenarioSender {
+trait GatlingScenarioBuilder[DTO_IN] extends SessionParamNames with GatlingScenarioSender {
+
+  val testingDataType: TestingDataType[DTO_IN, DTO_IN]
+
+  private implicit def genFunction: String => TestCaseData[DTO_IN] = testingDataType.inputMeta.genFunction
 
   val scenarioName: String
 
@@ -48,15 +52,13 @@ trait GatlingScenarioBuilder[DTO_IN] extends SessionParamNames with DtoGenerate[
     updateSession
   }
 
-  implicit val genFunction: String => TestCaseData[DTO_IN]
-
   protected def dtoGenerate(session: Session)(implicit genFunction: String => TestCaseData[DTO_IN]): Session = {
     val customer_id = session(customerIdSessionName).as[String]
     val testCaseData = genFunction(customer_id)
     val dto = testCaseData.data
     //    val universalDto = UniversalDto(customer_id, Map(), Map(), Map())
 
-    val bytesUniversalDto = AvroUtil.encode[DTO_IN](dto, encoder, writer)
+    val bytesUniversalDto = AvroUtil.encode[DTO_IN](dto, testingDataType.inputMeta.encoder, testingDataType.inputMeta.writer)
 
     session
       .set(bytesInputDtoSessionName, bytesUniversalDto)
