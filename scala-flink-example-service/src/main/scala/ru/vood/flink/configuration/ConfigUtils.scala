@@ -52,7 +52,7 @@ object ConfigUtils {
   }
 
 
-  implicit def proppsFromOptionalFile(fileName: String): Map[String, String] =
+  implicit def propsFromOptionalFile(fileName: String): Map[String, String] =
     getPropsFromResourcesFile(fileName) match {
       case Success(value) => value
       case Failure(_) => Map()
