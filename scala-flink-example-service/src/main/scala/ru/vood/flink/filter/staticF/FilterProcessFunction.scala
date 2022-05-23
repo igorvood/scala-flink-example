@@ -31,6 +31,7 @@ class FilterProcessFunction(private val filterConfig: FilterRule) extends Proces
     } else {
       ctx.output(outputTagsErrs, value)
     }
+
   }
 
   def process(inStr: DataStream[UniversalDto]): DataStream[UniversalDto] = {
