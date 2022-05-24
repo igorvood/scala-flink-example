@@ -9,7 +9,7 @@ import ru.vood.flink.gatling.constructor.impl.{OnlySendKafkaScenario, UserByTran
 
 case class SimpleScenario(implicit config: FlinkGatlingConfig) extends GatlingKafkaPopulation[UniversalDto] {
 
-  override def kafkaConsumerProperty: KafkaConsumerProperty = config.flinkJobServiceConfiguration.kafkaConsumerProperty
+  override def kafkaConsumerProperty: KafkaConsumerProperty = config.flinkJobServiceConfiguration.kafkaMainConsumerProperty
 
   override def additionalProducerGatlingProp: AdditionalProducerGatlingProp = config.additionalProducerGatlingProp
 
