@@ -1,9 +1,8 @@
 package ru.vood.flink.filter
 
-import play.api.libs.json.{Json, OWrites}
+import play.api.libs.json.{Json, OWrites, Reads}
 import ru.vood.flink.configuration.AllApplicationProperties
 import ru.vood.flink.configuration.PropertyUtil.propertyVal
-import ru.vood.flink.filter.dinamic.FilterDto
 
 case class FilterRule(
                        tagPrefix: String,
@@ -66,5 +65,7 @@ object FilterRule {
     }
 
   implicit val writes: OWrites[FilterRule] = Json.writes[FilterRule]
+
+  implicit val reads: Reads[FilterRule] = Json.reads[FilterRule]
 }
 

@@ -4,15 +4,8 @@ import play.api.libs.json.{Json, OWrites}
 
 import java.lang
 
-sealed trait OperandClass{
+sealed trait OperandClass {
 
- /* implicit val writesLongOperand: OWrites[LongOperand] = Json.writes[LongOperand]
-  implicit val writesIntOperand: OWrites[IntOperand] = Json.writes[IntOperand]
-  implicit val writesFloatOperand: OWrites[FloatOperand] = Json.writes[FloatOperand]
-  implicit val writesDoubleOperand: OWrites[DoubleOperand] = Json.writes[DoubleOperand]
-  implicit val writesBigDecimalOperand: OWrites[BigDecimalOperand] = Json.writes[BigDecimalOperand]
-  implicit val writesStringOperand: OWrites[StringOperand] = Json.writes[StringOperand]
-  implicit val writesBooleanOperand: OWrites[BooleanOperand] = Json.writes[BooleanOperand]*/
 }
 
 object OperandClass{

@@ -26,7 +26,7 @@ object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
     mainDataStream.addSink(configuration.kafkaProducerMap("producer-success"))
   }
 
-  def main(args: Array[String]): Unit = {logger
+  def main(args: Array[String]): Unit = {
     logger.info("Start app: " + this.getClass.getName)
     val configuration = configApp(args)
     implicit val consumer: FlinkKafkaConsumer[UniversalDto] = configuration.kafkaConsumer
