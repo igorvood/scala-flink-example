@@ -8,12 +8,15 @@ import ru.vood.flink.filter.{FilterRule, StringOperand}
 class GenJson extends org.scalatest.flatspec.AnyFlatSpec with should.Matchers {
 
   "runs with embedded kafka" should "work" in {
-    val value1 = Json.toJson(FilterDto(
+    val dto = FilterDto(
       id = "1",
       isActive = true,
-      filterRule = FilterRule("qw", fieldName = "fieldName1", StringOperand(Option("aws")), "null")))
+      filterRule = FilterRule("qw", fieldName = "fieldName1", StringOperand(Option("aws")), "null"))
+    val value1 = Json.toJson(dto)
     val str = Json.prettyPrint(value1)
     println(str)
+    assertResult(dto)( Json.fromJson[FilterDto](value1).get)
+    
 
   }
 }

@@ -42,7 +42,7 @@ case class FilterRule(
 
 object FilterRule {
 
-  def apply(prf: String)(implicit appProps: AllApplicationProperties): FilterRule =
+  def create(prf: String)(implicit appProps: AllApplicationProperties): FilterRule =
     new FilterRule(
       tagPrefix = propertyVal(prf, "tagPrefix"),
       fieldName = propertyVal(prf, "fieldName"),
