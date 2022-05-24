@@ -1,7 +1,9 @@
 package ru.vood.flink.filter
 
+import play.api.libs.json.{Json, OWrites}
 import ru.vood.flink.configuration.AllApplicationProperties
 import ru.vood.flink.configuration.PropertyUtil.propertyVal
+import ru.vood.flink.filter.dinamic.FilterDto
 
 case class FilterRule(
                        tagPrefix: String,
@@ -62,4 +64,7 @@ object FilterRule {
       case "Boolean" => BooleanOperand(Option(value).map(_.toBoolean))
       case unknown => throw new IllegalStateException(s"unsupported operandClass '$unknown' for prefix '$clazz'")
     }
+
+  implicit val writes: OWrites[FilterRule] = Json.writes[FilterRule]
 }
+
