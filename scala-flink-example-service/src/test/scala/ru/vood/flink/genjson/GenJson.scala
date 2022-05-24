@@ -11,7 +11,7 @@ class GenJson extends org.scalatest.flatspec.AnyFlatSpec with should.Matchers {
     val dto = FilterDto(
       id = "1",
       isActive = true,
-      filterRule = FilterRule("qw", fieldName = "fieldName1", StringOperand(Option("aws")), "null"))
+      filterRule = FilterRule("rule_1", fieldName = "fieldName1", StringOperand(Option("aws")), "null"))
     val value1 = Json.toJson(dto)
     val str = Json.prettyPrint(value1)
     println(str)
