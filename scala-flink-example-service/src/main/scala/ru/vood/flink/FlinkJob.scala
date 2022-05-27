@@ -29,7 +29,7 @@ object FlinkJob extends JobInterface[UniversalDto, FlinkJobConfiguration] {
   def main(args: Array[String]): Unit = {
     logger.info("Start app: " + this.getClass.getName)
     val configuration = configApp(args)
-    implicit val consumer: FlinkKafkaConsumer[UniversalDto] = configuration.kafkaConsumer
+    implicit val consumer: FlinkKafkaConsumer[UniversalDto] = configuration.kafkaMainConsumer
 
     val environment = configFlink(configuration.flinkConfiguration)
     runFlow(environment, configuration) { env => init(env) }

@@ -11,6 +11,7 @@ import ru.vood.flink.kafka.consumer.KafkaFactory.{createKafkaConsumer, createKaf
 
 case class FlinkJobConfiguration(flinkConfiguration: FlinkConfiguration,
                                  kafkaMainConsumerProperty: KafkaConsumerProperty,
+                                 kafkaFilterConsumerProperty: KafkaConsumerProperty,
                                  kafkaProducerPropertyMap: KafkaProducerPropertyMap,
                                 ) {
 
@@ -19,7 +20,7 @@ case class FlinkJobConfiguration(flinkConfiguration: FlinkConfiguration,
       override def deserialize(message: Array[Byte]): UniversalDto = convert.apply(message)
     }
 
-  lazy val kafkaConsumer: FlinkKafkaConsumer[UniversalDto] = createKafkaConsumer[UniversalDto](kafkaMainConsumerProperty)
+  lazy val kafkaMainConsumer: FlinkKafkaConsumer[UniversalDto] = createKafkaConsumer[UniversalDto](kafkaMainConsumerProperty)
   lazy val kafkaProducerMap: Map[String, FlinkKafkaProducer[UniversalDto]] = kafkaProducerPropertyMap
     .producers
     .map { prop => prop._1 -> createKafkaProducer(prop._2, { topicName => new FlinkKafkaSerializationSchema(topicName) })
